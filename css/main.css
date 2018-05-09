@@ -1,0 +1,15 @@
+#page-wrapper {
+	background-image: url(/images/bg.jpg);
+	background-size: cover;
+}
+
+#game-wrapper {
+	text-align: center;
+}
+
+#game {
+	width: 640px;
+	height: 480px;
+	position: relative;
+	display: inline-block;
+}

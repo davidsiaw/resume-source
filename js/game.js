@@ -1,0 +1,437 @@
+
+function pushAnimatedTile(tileInfo, x, y, animSpacingX)
+{
+	var coords = [];
+
+	for (var i=0; i<4; i++)
+	{
+		coords.push({x: x + animSpacingX * i, y: y});
+	}
+
+	tileInfo.push(
+	{
+		type: "simple",
+		coords: coords
+	});
+}
+
+function pushAutotile(tinfo, tileSize, offsetX, offsetY)
+{
+
+	var tileIndex = tinfo.length;
+
+	pushAnimatedTile(tinfo, (2+offsetX)*tileSize, (1+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (2+offsetX)*tileSize, (2+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (2+offsetX)*tileSize, (3+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (1+offsetX)*tileSize, (3+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (0+offsetX)*tileSize, (3+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (0+offsetX)*tileSize, (2+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (0+offsetX)*tileSize, (1+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (1+offsetX)*tileSize, (1+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (1+offsetX)*tileSize, (2+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (2+offsetX)*tileSize, (0+offsetY)*tileSize, 3*tileSize);
+	pushAnimatedTile(tinfo, (0+offsetX)*tileSize, (0+offsetY)*tileSize, 3*tileSize);
+
+	var indexes =[]
+	for (var i=0;i<12;i++)
+	{
+		indexes.push(i+tileIndex);
+	}
+
+	tileInfo.push(
+	{
+		type: "autotile12",
+		passable: Passable.Air,
+		indexes: indexes
+	});
+}
+
+var tileInfo = [];
+
+tileInfo.push(
+{
+	type: "simple",
+	passable: Passable.Air | Passable.Ground,
+	coords:[ {x:48, y:0} ]
+});
+
+pushAutotile(tileInfo, 48, 0, 0);
+
+
+
+function Map(w,h)
+{
+	var tiles = {};
+	this.width = w;
+	this.height = h;
+	
+	function makeTileKey(x,y) {
+		return x + "," + y;
+	}
+	
+	this.map = function(x,y)
+	{
+		if (tiles[makeTileKey(x,y)])
+		{
+			return tiles[makeTileKey(x,y)];
+		}
+		return 0;
+	}
+	
+	this.setTile = function (x,y,tile)
+	{
+		tiles[makeTileKey(x,y)] = tile;
+	}
+	return this;
+}
+
+// TODO: make proper loader
+
+
+function loadImages(imageArray, onComplete)
+{
+	var loadedImages = [];
+
+	function loadNextImage()
+	{
+		if (loadedImages.length == imageArray.length)
+		{
+			onComplete(loadedImages);
+		}
+		else
+		{
+			var theImage = new Image();
+			theImage.src = imageArray[loadedImages.length];
+			theImage.onload = function()
+			{
+				loadNextImage();
+			}
+			loadedImages.push(theImage);
+		}
+	}
+
+	loadNextImage();
+}
+
+
+loadImages([
+	"/images/game/output.png", 
+	"/images/game/transparent.png", 
+	"/images/game/backgroundpng.png", 
+	"/images/game/wings_anim.png",
+	"/images/game/explode_anim.png"
+	], 
+	function(loadedImages)
+	{
+		charImg = loadedImages[0];
+		tilesetImg = loadedImages[1];
+		backgroundImg = loadedImages[2];
+		wingsAnim = loadedImages[3];
+		explodeAnim = loadedImages[4];
+		startGame();
+	});
+
+
+function startScene(parent,map,script)
+{
+	var input = new SimpleInput();
+	var world = new World(tilesetImg, charImg, backgroundImg, tileInfo, map);
+
+	world.addAnimation("wings", wingsAnim, 192, 192);
+	world.addAnimation("explode", explodeAnim, 64, 64);
+	
+	var map = new CanvasMapView(10, 10, 0, 640,480, world.getModel());
+
+	var dialog = new DialogView(10,10,1,640,480,"/images/game/midJQ.png");
+	var controlleft = new DialogView(10,10,1,640,480,"/images/game/midJQ.png");
+	var controlright = new DialogView(10,10,1,640,480,"/images/game/midJQ.png");
+	var statusDialog = new DialogView(10,10,1,640,480,"/images/game/midJQ.png");
+
+	controlleft.modeLeftDialog();
+	controlright.modeRightDialog();
+	statusDialog.modeStatusDialog();
+
+	mapDisplay = parent
+
+	mapDisplay.appendChild(controlleft.getDiv());
+	mapDisplay.appendChild(controlright.getDiv());
+	mapDisplay.appendChild(statusDialog.getDiv());
+	mapDisplay.appendChild(dialog.getDiv());
+	mapDisplay.appendChild(map.getDiv());
+
+
+	var gameState = new GameState(input, world, map);
+	
+	var lastUpdateTime = new Date();
+
+	var interval = setInterval(function()
+	{
+	    var timeBetween = new Date() - lastUpdateTime;
+	    if (timeBetween > 200)
+	    {
+	    	// 200ms updates
+			lastUpdateTime = new Date();
+	    }
+
+		input.checkInputs();
+
+		dialog.update();
+		controlleft.update();
+		controlright.update();
+		statusDialog.update();
+		map.update();
+
+		
+	}, 16)
+
+	gameState.dialogs["BOTTOM"] = dialog;
+	gameState.dialogs["LEFT"] = controlleft;
+	gameState.dialogs["RIGHT"] = controlright;
+	gameState.dialogs["STATUS"] = statusDialog;
+
+	gameState.runScript(script);
+
+	return {
+		interval: interval,
+		gameState: gameState,
+		mapDisplay: mapDisplay,
+		parent: parent
+	};
+}
+
+function stopScene(scene)
+{
+	clearInterval(scene.interval);
+	scene.gameState.stop();
+	scene.parent.removeChild(scene.mapDisplay);
+}
+
+
+
+function startGame()
+{
+	firstmap();
+}
+
+function secondmap()
+{
+}
+
+
+function firstmap()
+{
+	var mapInfo = new Map(20,20);
+
+	var gameState;
+	
+	var setTile =
+	[
+		Character.customAction(function(char)
+		{
+			var front = world.getPositionOf(char, 1);
+			mapInfo.setTile(front.x, front.y, 12);
+			world.rerenderWorld();
+		})
+	];
+	
+	var clearTile =
+	[
+		Character.customAction(function(char)
+		{
+			var front = world.getFrontOf(char, 1);
+			mapInfo.setTile(front.x, front.y, 0);
+			world.rerenderWorld();
+		})
+	];
+	
+	var killPersonScript =
+	[
+		Interaction.addAnimationOnInteractee("explode"),
+		Interaction.killInteractee,
+		Character.die
+	];
+
+	var fireballScript =
+	[
+		Character.assignCollide(killPersonScript),
+		Character.setSlow(8),
+		Character.setIsFlying,
+		Character.walkForward,
+		Character.walkForward,
+		Character.walkForward,
+		Character.walkForward,
+		Character.walkForward,
+		Character.walkForward,
+		Character.walkForward,
+		Character.walkForward,
+		Character.die
+	];
+
+	var controlMenu = [
+		{name: "Bag", desc: "Check your inventory"},
+		{name: "Equip", desc: "Check your equipment"},
+		{name: "Status", desc: "Check your status"},
+		{name: "Skills", desc: "Check your skills"},
+		{name: "Magic", desc: "Check your magic"},
+		{name: "Config", desc: "Change game configuration"},
+		{name: "Save", desc: "Save game"},
+	];
+
+	var showControls =
+	[
+		Script.showDialog("RIGHT"),
+		Script.showDialog("LEFT"),
+		Script.showDialog("STATUS"),
+		Script.simpleSelectDialog("LEFT", controlMenu.map(function(x){ return x.name; }), 
+			function(sel)
+			{
+
+			}, 
+			function(cursel)
+			{
+				gameState.runScript([Script.setDialogText("STATUS", [controlMenu[cursel].desc])])
+			},
+			true
+		),
+
+		Script.hideDialog("STATUS"),
+		Script.hideDialog("LEFT"),
+		Script.hideDialog("RIGHT"),
+	];
+	
+	var heroScript =
+	[
+		Character.centerCamera,
+		Character.assignDirectionalControl,
+		Character.assignCollide([]),
+		Character.assignZ(showControls),
+		//Character.assignX([Character.addAnimation("wings")]),
+		Character.assignA([Character.interact]),
+		Character.assignS([Character.spawnCharacterAtFront(2,-16,fireballScript)])
+	];
+	
+	var boyTalkedToScript =
+	[
+		Interaction.pauseInteractee,
+		Interaction.faceInteractor,
+		Script.showDialog("BOTTOM"),
+		Script.speechDialog("BOTTOM", ["宇宙からの愛のエネルギーを", "胸が痛いほどに感じています"]),
+		Script.simpleSelectDialog("BOTTOM", ["Kagami", "Tsukasa", "Konata", "Miyuki", "Kusakabe", "Hiyori"], 
+			function(sel){}),
+		Script.hideDialog("BOTTOM"),
+		Interaction.resumeInteractee
+	];
+	
+	var boyScript =
+	[
+		Character.assignInteract(boyTalkedToScript),
+		Character.setSlow(64),
+		Character.walkUp,
+		Character.walkUp,
+		Character.walkDown,
+		Character.walkDown,
+		Script.repeat,
+	];
+	
+	var girlScript =
+	[
+		Character.setSlow(64),
+		Character.walkLeft,
+		Character.walkLeft,
+		Character.walkLeft,
+		Character.walkLeft,
+		Character.walkRight,
+		Character.walkRight,
+		Character.walkRight,
+		Character.walkRight,
+		Script.repeat,
+	];
+
+	var collidedThing = 0;
+	var showOuch = 
+	[
+		Interaction.getInteracteeId(function(id) { 
+			console.log("id = " + id); 
+			collidedThing = id; 
+		}),
+		Script.gotoif("end", function() { return collidedThing !== 0; }),
+		Script.showDialog("BOTTOM"),
+		Script.speechDialog("BOTTOM", ["Ouch"]),
+		Script.hideDialog("BOTTOM"),
+		Script.label("end"),
+	];
+
+	var p = 100;
+
+	var walkUpDown =
+	[
+		Character.setSlow(64),
+
+		Character.assignCollide(showOuch),
+
+		Script.label("start"),
+
+		Script.do(function() { /*console.log("nyan");*/ }),
+
+		Script.run(4,
+		[
+			Character.walkDown,
+			Character.getCharPos(function(x,y) { /*console.log("pos: " + x + " " + y)*/ })
+		]),
+		Script.run(4,
+		[
+			Character.walkUp,
+			Character.getCharPos(function(x,y) { /*console.log("pos: " + x + " " + y)*/ })
+		]),
+
+		Script.gotoif("start", function() { return p == 100; }),
+	];
+
+	var boxCollide =
+	[
+		Character.turnBackOnInteractor,
+		Character.walkForward
+
+	];
+	
+	var boxScript =
+	[
+		Character.setSlow(32),
+		Character.assignHitBySomething(boxCollide)
+	];
+
+	var mainScript =
+	[
+		Script.customAction(function(theGameState) { gameState = theGameState; }),
+
+		Script.hideDialog("BOTTOM"),
+		Script.hideDialog("STATUS"),
+		Script.hideDialog("LEFT"),
+		Script.hideDialog("RIGHT"),
+
+		Script.addCharacter(5,0,0,-16,heroScript),
+		Script.addCharacter(1,5,5,-16,girlScript),
+		Script.addCharacter(3,13,13,-16,boyScript),
+		Script.addCharacter(5,1,1,-16,walkUpDown),
+		Script.addCharacter(3,6,5,-16,[Character.walkDown]),
+		Script.addCharacter(7,7,5,-16,[Character.walkDown]),
+		Script.addCharacter(4,8,5,-16,[Character.walkDown]),
+		Script.addCharacter(9,10,10,0,boxScript),
+		Script.addCharacter(9,11,10,0,boxScript),
+		Script.addCharacter(9,12,10,0,boxScript),
+		Script.addCharacter(9,13,10,0,boxScript),
+		Script.addCharacter(9,14,10,0,boxScript),
+		Script.addCharacter(10,15,10,0,boxScript),
+		Script.addCharacter(10,16,10,0,boxScript),
+		Script.addCharacter(10,17,10,0,boxScript),
+		Script.addCharacter(0,18,10,-16,boxScript),
+		//Script.showDialog(dialog),
+		//Script.speechDialog(dialog, ["Sie sind das Essen und we sind die Jager", "", "This is the world"]),
+		//Script.speechDialog(dialog, ["She was very nervous"]),
+
+	];
+
+	startScene(document.getElementById("game"), mapInfo, mainScript);
+
+}
+

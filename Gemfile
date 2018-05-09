@@ -1,0 +1,4 @@
+source 'https://rubygems.org'
+
+gem "weaver", "0.6.3"
+gem "redcarpet"

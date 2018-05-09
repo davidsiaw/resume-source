@@ -1,0 +1,88 @@
+- :name: Sumomo
+  :description: A sophisticated tool for deploying cloud content and services
+  :about:
+    :file: data/projects/sumomo.md
+  :url: https://github.com/davidsiaw/sumomo
+  :languages:
+  - Ruby
+  - JavaScript
+
+- :name: Weaver
+  :description: A static website generator (used to generate this resume)
+  :about:
+    :file: data/projects/weaver.md
+  :url: https://github.com/davidsiaw/weaver
+  :languages:
+  - Ruby
+
+- :name: Chino
+  :description: A tool to build Cappuccino applications and preview them easily
+  :about:
+  - This tool was created by myself to streamline the creation of Cappuccino/Objective-J applications
+  - It comes with a small webserver to allow working in a web-like environment and provides build tools to take out all the boilerplate work
+  :url: https://github.com/davidsiaw/chino
+  :languages:
+  - Ruby
+  - Objective-J
+
+- :name: Kichi
+  :description: A secrets management tool using AWS IAM and AWS S3
+  :about:
+  - This tool allows one to manage secrets such as passwords and API keys to services by using AWS IAM.
+  - All keys are stored on S3 and only people with access to that bucket can read them.
+  :url: https://github.com/davidsiaw/kichi
+  :languages:
+  - Ruby
+
+- :name: Hexlife
+  :description: A fun implementation of the Game of Life on a hexagonal grid
+  :about:
+  - A recreational experiment on cellular automata
+  - I made some blog posts about it, where people have discovered more lifes in the <a href="http://davidsiaw.github.io/blog/2014/11/22/hexlife-part-2/#disqus_thread">comments</a>
+  :url: https://github.com/davidsiaw/hexlife
+  :languages:
+  - JavaScript
+
+- :name: Ruco
+  :description: A Ruby DSL for constructing LL(1) parsers
+  :about:
+  - A toy but useful Ruby DSL that uses Coco/R to generate C++ code to generate the AST for a given grammar
+  :url: https://github.com/davidsiaw/ruco
+  :languages:
+  - Ruby
+
+- :name: AionDB
+  :description: A fun data website for information on the MMORPG Aion Online
+  :url: https://github.com/davidsiaw/aiondb
+  :about:
+  - Uses a the sophisticated file format description language from BlueBlocks to read the game client files and transform it into a nice website
+  - Uses WebGL to show furniture (see Decoration section)
+  - Uses the Google Maps API to provide maps of gathering spots
+  - <a href="https://aiondb.astrobunny.net">The AionDB website</a>
+  :languages:
+  - C#
+  - HTML
+  - JavaScript
+  - CSS
+
+- :name: AikaDB
+  :description: A fun data website for the MMORPG AIKA Online
+  :url: https://github.com/davidsiaw/jitopener
+  :about:
+  - Uses a the sophisticated file format description language from BlueBlocks to read the game client files and transform it into a nice website
+  - Provides highly detailed cross referencing and Quest information
+  - Uses little GIFs to provide locations of NPCs
+  - <a href="https://aikadb.astrobunny.net">The AikaDB website</a>
+  :languages:
+  - C#
+  - HTML
+  - JavaScript
+  - CSS
+
+- :name: LuaCppInterface
+  :description: A highly opinionated Lua abstraction library for C++
+  :url: https://github.com/davidsiaw/luacppinterface
+  :about:
+    :file: data/projects/luacppinterface.md
+  :languages:
+  - C++
