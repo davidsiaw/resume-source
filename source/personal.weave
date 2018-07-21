@@ -39,6 +39,4 @@ topnav_page "", "ABOUT: David Siaw" do
 			end
 		end
 	end
-
-	
 end

@@ -1,0 +1,33 @@
+david_siaw: David Siaw
+software_engineer: Software Engineer
+tokyo: 東京
+work_experience: 職務経歴
+side_projects: 独自開発したアプリ等
+side_projects_comment: 
+tertiary_education: 学歴
+resume: 職務経歴書
+contact: 連絡先
+github: Github 
+company: 法人名
+start_date: 入社
+end_date: 退職
+education: 学歴
+location: 勤務先
+start_year: 入学年度
+end_year: 卒業年度
+major: 専攻
+languages: 適用言語
+name: プロジェクト名
+description: 記載
+about: 説
+url: URL
+position: 職名
+detail: 詳細
+roles: 役割
+frameworks: 適用フレームワーク
+services: 適用サービス
+oses: 適用OS
+time_in_office: 勤続期間
+subject_name: 氏名
+as_of_date: <<year>>年<<month>>月<<day>>日　現在
+about_me: 自己PR

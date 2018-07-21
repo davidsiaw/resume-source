@@ -1,68 +1,50 @@
+include "resume.rb"
+include "contact.rb"
 include "util.rb"
 
-work_exp = YAML::load(File.open("data/work_exp.yml"))
-education = YAML::load(File.open("data/education.yml"))
-projects = YAML::load(File.open("data/personal_projects.yml"))
-
-topnav_page "", "RESUME: David Siaw" do
-
-	make_menu
-
-
+center_page "", "RESUME: David Siaw" do
 	row do
-		col 12 do
-			ibox collapsible: true do
-				title "Work Experience"
 
-				fancy_table(
-					data: work_exp.reverse, 
-					show_columns: [:company, :start_date, :languages], 
-					tag_columns:{
-						languages: :danger,
-						frameworks: :info,
-						oses: :warning,
-						services: :success
-					}
-				)
-			end
+		h2 "David's Resume"
+	end
+	row do
+		col 12, xs:0 do
+			div style: "height: 200px"
 		end
 	end
-
 	row do
-		col 12 do
-			ibox collapsible: true do
-				title "Side Projects"
-
-				p "A small selection of side projects that I work on in my free time to improve my skills outside of work"
-
-				fancy_table(
-					data: projects, 
-					show_columns: [:name, :description, :languages],
-					link_columns: [:url], 
-					tag_columns:{
-						languages: :danger
-					}
-				)
-			end
+		col 1, md:2, sm:2 do
+		end
+		col 4, lg:4, md:4, xs: 0 do
+			lang_select_button :en
+		end
+		col 2, md:0, sm:0 do
+		end
+		col 4, lg:4, md:4, xs: 0 do
+			lang_select_button :ja
+		end
+		col 1, md:2, sm:2 do
 		end
 	end
-
 	row do
-		col 12 do
-			ibox collapsible: true do
-				title "Tertiary Education"
-
-				fancy_table(
-					data: education, 
-					show_columns: [:education, :end_year]
-				)
-			end
-
-			on_page_load <<-SCRIPT
-		        WinMove();
-			SCRIPT
+		col 2 do
 		end
-
+		col 8, lg:0, md:0, sm: 0 do
+			lang_select_button :en
+		end
+		col 2 do
+		end
 	end
-
+	row do
+		col 2 do
+		end
+		col 8, lg:0, md:0, sm: 0 do
+			lang_select_button :ja
+		end
+		col 2 do
+		end
+	end
 end
+
+make_pages_for :en
+make_pages_for :ja

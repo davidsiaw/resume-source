@@ -1,7 +1,7 @@
 - :name: Sumomo
   :description: A sophisticated tool for deploying cloud content and services
   :about:
-    :file: data/projects/sumomo.md
+    :file: projects/sumomo.md
   :url: https://github.com/davidsiaw/sumomo
   :languages:
   - Ruby
@@ -10,7 +10,7 @@
 - :name: Weaver
   :description: A static website generator (used to generate this resume)
   :about:
-    :file: data/projects/weaver.md
+    :file: projects/weaver.md
   :url: https://github.com/davidsiaw/weaver
   :languages:
   - Ruby
@@ -83,6 +83,6 @@
   :description: A highly opinionated Lua abstraction library for C++
   :url: https://github.com/davidsiaw/luacppinterface
   :about:
-    :file: data/projects/luacppinterface.md
+    :file: projects/luacppinterface.md
   :languages:
   - C++
