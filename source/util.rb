@@ -105,9 +105,10 @@ end
 
 def menu_pages
 	pages = {
-		resume:  {symbol: :home, path: "/", method: "make_resume_proper"},
-		contact: {symbol: :phone, path: "/contact", method: "make_contact_page"},
-		github:  {symbol: :github, path: "https://github.com/davidsiaw"}
+		resume:     {symbol: :home, path: "/", method: "make_resume_proper"},
+		printable:  {symbol: :print, path: "/printable", method: "make_resume_printable"},
+		contact:    {symbol: :phone, path: "/contact", method: "make_contact_page"},
+		github:     {symbol: :github, path: "https://github.com/davidsiaw"}
 	}
 end
 
@@ -115,10 +116,25 @@ def make_menu(lang)
 
 	strings = YAML::load(File.open("data/#{lang}/strings.yml"))
 
+	lang_image = {}
+	langs.each do |lang,name|
+		elem = Weaver::Elements.new(self, @anchors)
+		elem.instance_eval do
+			image "#{lang}flag.svg", style: "height: 15px;"
+		end
+		lang_image[lang] = elem.generate
+	end
+
 	menu do
 		menu_pages.each do |k,v|
 			nav strings["#{k}"], v[:symbol], v[:path].start_with?("https") ? v[:path] : "/#{lang}#{v[:path]}"
 		end
+
+		langs.each do |lang,name|
+
+			nav name, lang_image[lang], "/#{lang}", position: :right
+		end
+
 	end
 
 	request_css "css/main.css"
@@ -135,22 +151,27 @@ def make_menu(lang)
 	end
 end
 
-def make_pages_for(lang)
+def make_pages
 
-	menu_pages.each do |k,v|
-		if v[:method]
-			send(v[:method], lang)
+	langs.each do |lang, name|
+		menu_pages.each do |k,v|
+			if v[:method]
+				send(v[:method], lang)
+			end
 		end
 	end
 
 end
 
-def lang_name(lang)
+def langs
 	names = {
 		en: "English",
 		ja: "日本語"
 	}
-	names[lang]
+end
+
+def lang_name(lang)
+	langs[lang]
 end
 
 def lang_select_button(lang)

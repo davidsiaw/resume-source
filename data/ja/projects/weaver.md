@@ -1,11 +1,11 @@
 name: weaver
 ---
 
-Weaver is a static website generation tool with a Ruby-based DSL that allows the very rapid development of static websites.
+**※本ウェブサイトはこのツールを使って作りました。**
 
-Weaver is used to generate my resume website.
+Weaverは静的ウェブサイトを作るツールです。ウェブサイトの書き方はWeaver専用のRuby DSLでする。
 
-A simple web page in weaver looks like this:
+シンプルなウェブページ例:
 
     center_page "Hello world" do
         ibox do
@@ -16,6 +16,8 @@ A simple web page in weaver looks like this:
         end
     end
 
-This illustrates that you can use Ruby in your website code unlike in HTML. It also comes with a preview server that allows you to refresh your page after changing it, just like you would do with a website served from the filesystem.
+上記の例に書かれたように、HTMLと違ってRuby DSLでウェブサイトを書くとRubyのいろんな機能を利用していろいろを自動化することが可能になります。
 
-Additional documentation is here: [http://davidsiaw.github.io/weaver-docs/](http://davidsiaw.github.io/weaver-docs/)
+HTMLを利用する時と同じ「リフレッシュして更新を直接見える」を得るため、便利なプレビューサーバも提供しています。
+
+詳しくはウェブサイトでご覧ください: [http://davidsiaw.github.io/weaver-docs/](http://davidsiaw.github.io/weaver-docs/)

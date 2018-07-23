@@ -31,3 +31,4 @@ time_in_office: Length
 subject_name: Name
 as_of_date: As of <<day>>/<<month>>/<<year>>
 about_me: About me
+printable: Printable Version

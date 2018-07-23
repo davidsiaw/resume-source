@@ -13,29 +13,29 @@
   - Linux
   - eCos
   :services: 
-  :detail: This was a 3-month internship to complete a short software project, primarily to investigate the use of C++ on embedded devices.
+  :detail: 短いソフトウェアプロジェクトを完成するインターンシップ。携帯ラジオのソフトウェアにC++の使用の現実性の検討作業。
   :roles:
-  - Designed and created UI abstraction for various radio devices
-  - Built automated font importer for devices
-  - Designed and built automated font importer for embedded devices
-  - Updated various radio firmware projects to use C++ and migrated them from GCC 2.9 to GCC 4.0
+  - 複数の携帯ラジオモデルのUI抽出を作りました
+  - 組み込みシステム用のフォントコンバーターツールを作りました。
+  - ラジオファームウェアのコンパイラをGCC 2.9からGCC 4.0の移行作業とC++の対応作業を行いました。
 
 - :company: Telogis Inc.
   :position: ソフトウェアエンジニア
   :location: ニュージーランド・クライストチャーチ
   :start_date: 2007/11
   :end_date: 2013/06
-  :detail: Joined Telogis as a Junior Software Developer to work on GeoBase, a GIS toolkit for Windows Applications.
+  :detail: Windows向きのGISソフトウェアの開発者として勤めました。
   :roles: 
-  - Developed GeoStream which is an ASP.NET mapping application with a JavaScript frontend
-  - Developed GeoBase which is a C#-based GIS toolkit that contains many features useful for mapping, routing and navigation
-  - Maintained Natural Language Geocoder using Hidden Markov Models, and developed processes and tools for preparing data files
-  - Designed, developed and maintained Drilldown Geocoder for Windows Mobile and Windows CE devices powered by SQLite
-  - Designed and developed live preview and performance testing feature for map-styling tools for mobile devices
-  - Developed testing and demonstration tools for GeoStream using Cappuccino and Objective-J
-  - Developed time tracking tools, import tools and diagnostics tools for proprietary data file formats
-  - Managed deployment of new data file formats and coordinated data team processes
-  - Maintained GeoBase and Workforce products written in C, C++ and C#
+  - ASP.NETに基づく地図ウェブアプリのGeoStreamの開発に貢献しました。フロントエンドはJavaScriptです。
+  - 多機能（地図作成、経路選択、ナビゲーション）のGISソフトウェアライブラリーのGeoBaseの開発に貢献しました。
+  - 機械学習テクニックを利用し地名変換機能を開発しました。
+  - 客用のデータファイルのリリースプロセスデザインと開発を行いました。
+  - Windows Mobile用の軽い地名変換機能のデザインと開発を行いました。
+  - Windows Mobileデバイス用の地図のスタイルデザインツールを開発しました。
+  - テスティングとデモツールをCappuccinoとObjective-Jを利用して開発しました。
+  - 社内時間管理ツールやデーターツールや診断ツール等の開発と社内適用サポートを行いました。
+  - 新しいデータフォーマットのリリースプロセスを管理しました。
+  - Workforceのプロダクト開発に貢献しました。
   :languages:
   - C#
   - C++
@@ -52,11 +52,11 @@
   - Windows Mobile
 
 - :company: 6waves 株式会社
-  :position: Lead Software Engineer
+  :position: リードソフトウェアエンジニア
   :start_date: 2014/03
   :end_date: 2014/10
   :location: 東京
-  :detail: Joined 6waves to push forward the conversion and release of overseas games for the Japanese market
+  :detail: 6wavesに海外ゲームのローカリゼーションと日本市場リリースをスムーズに行えるためにリードエンジニアとして勤め始めました。
   :roles: 
   - Established streamlined processes for testing, continuous integration and continuous deployment as well as efficient and automated deployment to staging and production environments
   - Maintained and added event features to Bubbleworld on Yahoo Mobage.

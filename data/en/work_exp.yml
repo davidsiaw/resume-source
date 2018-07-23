@@ -16,7 +16,6 @@
   :detail: This was a 3-month internship to complete a short software project, primarily to investigate the use of C++ on embedded devices.
   :roles:
   - Designed and created UI abstraction for various radio devices
-  - Built automated font importer for devices
   - Designed and built automated font importer for embedded devices
   - Updated various radio firmware projects to use C++ and migrated them from GCC 2.9 to GCC 4.0
 

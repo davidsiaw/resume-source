@@ -18,7 +18,7 @@ end_year: 卒業年度
 major: 専攻
 languages: 適用言語
 name: プロジェクト名
-description: 記載
+description: 用途や説明
 about: 説
 url: URL
 position: 職名
@@ -31,3 +31,4 @@ time_in_office: 勤続期間
 subject_name: 氏名
 as_of_date: <<year>>年<<month>>月<<day>>日　現在
 about_me: 自己PR
+printable: 印刷用

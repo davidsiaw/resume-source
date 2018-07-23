@@ -1,17 +1,19 @@
 name: luacppinterface
 ---
 
-LuaCppInterface was created to provide a Lua interface for a Bomberman clone [https://github.com/ten-forward/bomberman](https://github.com/ten-forward/bomberman)
+ボンバーマンクローンの[https://github.com/ten-forward/bomberman](https://github.com/ten-forward/bomberman)のために作ったLuaとC++のバインダー
 
-It was basically created so Lua could easily be pulled in to C++ with a minimal amount of fuss:
+Luaの複雑なC APIをC++に手軽に使えるため、簡単にわかりやすいバインダーを作りました。
 
-    // Create a function from an existing C function called "abs" (available in cmath)
+利用例:
+
+    // Cにすでに存在している公式をLuaにリンクする
     auto absolute = lua.CreateFunction<int(int)>(abs);
     
-    // Create a function using a C++ lambda
+    // 新しいC++ lambdaをLuaにリンクする
     auto lambdaFunc = lua.CreateFunction<void()>([&]()
     {
         std::cout << "called lambdaFunc" << std::endl;
     });
 
-It was also made to not be able to do everything that Lua can do to improve usability and maintainability.
+メンテ―ナンスをしやすくために、Luaの紛らわしい使い方はこのバインダーには使いずらいようにしました（例えば文字列や数字以外のテーブルキーはこのバインダーに禁じられています）。

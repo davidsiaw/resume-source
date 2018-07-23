@@ -46,5 +46,4 @@ center_page "", "RESUME: David Siaw" do
 	end
 end
 
-make_pages_for :en
-make_pages_for :ja
+make_pages

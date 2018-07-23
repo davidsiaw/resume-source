@@ -1,5 +1,5 @@
 - :name: Sumomo
-  :description: A sophisticated tool for deploying cloud content and services
+  :description: AWSにクラウドサービスやウェブサイトの配備プロセスを作るツール
   :about:
     :file: projects/sumomo.md
   :url: https://github.com/davidsiaw/sumomo
@@ -8,7 +8,7 @@
   - JavaScript
 
 - :name: Weaver
-  :description: A static website generator (used to generate this resume)
+  :description: 静的サイトジェネレータ
   :about:
     :file: projects/weaver.md
   :url: https://github.com/davidsiaw/weaver
@@ -16,49 +16,53 @@
   - Ruby
 
 - :name: Chino
-  :description: A tool to build Cappuccino applications and preview them easily
+  :description: Cappuccinoアプリの建造とプレビューを簡単にするツール
   :about:
-  - This tool was created by myself to streamline the creation of Cappuccino/Objective-J applications
-  - It comes with a small webserver to allow working in a web-like environment and provides build tools to take out all the boilerplate work
+  - Objective-JとCappuccinoアプリの開発を円滑にするために作ったツール
+  - プレビュー用の小さいウェブサーバとビルド機能が含んでいます
+  - CappuccinoとObjective-JはMac向けのアプリ開発と同じ感覚でWebアプリケーションを開発することができるフレームワークです
+  - <a href="http://www.cappuccino-project.org/">CappuccinoとObjective-Jのウェブサイト(リンク)</a> 
+  - <a href="http://davidsiaw.github.io/Cappuccino-Kitchen-Sink/">Cappuccinoアプリ例(リンク)</a> 
   :url: https://github.com/davidsiaw/chino
   :languages:
   - Ruby
   - Objective-J
 
 - :name: Kichi
-  :description: A secrets management tool using AWS IAM and AWS S3
+  :description: 設定秘密管理ツール (AWS IAMとAWS S3使用)
   :about:
-  - This tool allows one to manage secrets such as passwords and API keys to services by using AWS IAM.
-  - All keys are stored on S3 and only people with access to that bucket can read them.
+  - AWS IAMを利用して設定秘密(パスワードやAPIキーなど)の管理を簡単にするDevOps向きツール
+  - 設定秘密はすべてAWS S3に保存されている故、秘密の読み込みはアクセス権限を持つAWSアカウント制となります
   :url: https://github.com/davidsiaw/kichi
   :languages:
   - Ruby
 
 - :name: Hexlife
-  :description: A fun implementation of the Game of Life on a hexagonal grid
+  :description: 六角形ライフゲーム
   :about:
-  - A recreational experiment on cellular automata
-  - I made some blog posts about it, where people have discovered more lifes in the <a href="http://davidsiaw.github.io/blog/2014/11/22/hexlife-part-2/#disqus_thread">comments</a>
+  - 遊びに作ったセルオートマトンの実験
+  - ブログの中に詳細を書いた以来、本アプリの利用者は新しい<a href="http://davidsiaw.github.io/blog/2014/11/22/hexlife-part-2/#disqus_thread">生命体を発見しました(リンク)</a>。
   :url: https://github.com/davidsiaw/hexlife
   :languages:
   - JavaScript
 
 - :name: Ruco
-  :description: A Ruby DSL for constructing LL(1) parsers
+  :description: LL(1)文法を使って、パーサとASTをJSONで出力するコンパイラを吐き出すコードジェネレータ
   :about:
-  - A toy but useful Ruby DSL that uses Coco/R to generate C++ code to generate the AST for a given grammar
+  - 文法定義は簡単なRuby DSLでする
+  - パーサとASTジェネレータ以外、C++用のボイラープレートコードも出力します
   :url: https://github.com/davidsiaw/ruco
   :languages:
   - Ruby
 
 - :name: AionDB
-  :description: A fun data website for information on the MMORPG Aion Online
+  :description: MMOのAion Onlineのゲームクライアントから情報を掘り出してウェブサイトを作るツール
   :url: https://github.com/davidsiaw/aiondb
   :about:
-  - Uses a the sophisticated file format description language from BlueBlocks to read the game client files and transform it into a nice website
-  - Uses WebGL to show furniture (see Decoration section)
-  - Uses the Google Maps API to provide maps of gathering spots
-  - <a href="https://aiondb.astrobunny.net">The AionDB website</a>
+  - C#に特別に作られたファイルフォーマット定義言語を使って、ゲームクライアントファイルから情報を読み込めるようにしました。
+  - WebGLで家具表示されています。（Decorationsページにご覧いただけます。）
+  - Google Maps APIを使って資源取集位置を表示されています。
+  - <a href="https://aiondb.astrobunny.net">AionDBウェブサイトはこちら</a>
   :languages:
   - C#
   - HTML
@@ -66,13 +70,12 @@
   - CSS
 
 - :name: AikaDB
-  :description: A fun data website for the MMORPG AIKA Online
+  :description: MMOのAIKA Onlineのゲームクライアントから情報を掘り出してウェブサイトを作るツール
   :url: https://github.com/davidsiaw/jitopener
   :about:
-  - Uses a the sophisticated file format description language from BlueBlocks to read the game client files and transform it into a nice website
-  - Provides highly detailed cross referencing and Quest information
-  - Uses little GIFs to provide locations of NPCs
-  - <a href="https://aikadb.astrobunny.net">The AikaDB website</a>
+  - C#に特別に作られたファイルフォーマット定義言語を使って、ゲームクライアントファイルから情報を読み込めるようにしました。
+  - 動画GIFを使ってNPC位置を表示されています
+  - <a href="https://aikadb.astrobunny.net">AikaDBウェブサイトはこちら</a>
   :languages:
   - C#
   - HTML
@@ -80,7 +83,7 @@
   - CSS
 
 - :name: LuaCppInterface
-  :description: A highly opinionated Lua abstraction library for C++
+  :description: C++用のLuaバインダ
   :url: https://github.com/davidsiaw/luacppinterface
   :about:
     :file: projects/luacppinterface.md

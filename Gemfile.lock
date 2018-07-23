@@ -1,3 +1,11 @@
+PATH
+  remote: /home/david/programs/weaver
+  specs:
+    weaver (0.6.3)
+      activesupport
+      sinatra
+      trollop
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -25,17 +33,13 @@ GEM
     trollop (2.1.2)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    weaver (0.6.3)
-      activesupport
-      sinatra
-      trollop
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   redcarpet
-  weaver (= 0.6.3)
+  weaver!
 
 BUNDLED WITH
    1.14.6

@@ -9,13 +9,16 @@ def make_contact_page(lang)
 			col 12 do
 				ibox do
 
-					p "While it is likely that you have arrived at this page because I directed you to it, if I did not give you a way to contact me, you can reach me here via the instructions below:"
+					renderer = Redcarpet::Render::HTML.new()
+					markdown = Redcarpet::Markdown.new(renderer, autolink: true, tables: true)
+					content = File.read("data/#{lang}/contact.md").split("---", 2)[1]
 
-					h3 "Contact me at"
+					rendered = markdown.render(content)
 
-					h2 "davidsiaw at google mail"
+					rendered.gsub!(/<img src="(.+?)"/, '<img class="img-responsive" src="/images/\\1"')
 
-					h5 "You can write the full e-mail address now ;)"
+					text "#{rendered}"
+
 				end
 			end
 

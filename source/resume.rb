@@ -2,7 +2,7 @@ require_relative "util.rb"
 require "redcarpet"
 require "yaml"
 
-def make_resume_proper(lang)
+def make_resume_printable(lang)
 	work_exp = YAML::load(File.open("data/#{lang}/work_exp.yml"))
 	education = YAML::load(File.open("data/#{lang}/education.yml"))
 	projects = YAML::load(File.open("data/#{lang}/personal_projects.yml"))
@@ -11,6 +11,7 @@ def make_resume_proper(lang)
 	raw_page "#{lang}/printable", "RESUME: David Siaw" do
 		html do
 			head do
+				title "#{strings["resume"]}: David Siaw"
 				style <<-STYLE
 @page { margin: 0; }
 @media print {
@@ -171,6 +172,14 @@ h2
 			end
 		end
 	end
+end
+
+def make_resume_proper(lang)
+	work_exp = YAML::load(File.open("data/#{lang}/work_exp.yml"))
+	education = YAML::load(File.open("data/#{lang}/education.yml"))
+	projects = YAML::load(File.open("data/#{lang}/personal_projects.yml"))
+	strings = YAML::load(File.open("data/#{lang}/strings.yml"))
+
 
 	topnav_page "#{lang}", "RESUME: David Siaw" do
 

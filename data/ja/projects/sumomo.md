@@ -1,9 +1,13 @@
 name: sumomo
 ---
 
-Sumomo is a powerful Ruby-based DSL that extends AWS CloudFormation and creates a nice framework from which you can easily describe  complex cloud topologies with code.
+**※本ウェブサイトはこのツールを利用して作りました。**
 
-A simple deployable example
+Sumomoはクラウドシステム配備を簡単にする高機能Ruby DSLです。
+
+Sumomoの使用例:
+
+    # このプログラムは簡単にVPC,Subnet,Gatewayを準備して、その中にEIPとEC2を作ります。
 
     network = make_network(layers: [:web, :db])
     
@@ -18,11 +22,11 @@ A simple deployable example
         script: <<-SCRIPT
             yum install git gcc g++
             echo "hello world" >> ~/hello
-            # or maybe start apache or any service that the server will use
+            # サーバーのスタータップスクリプトなどはここで
         SCRIPT
     )
 
     output "IPAddress", eip
 
-- Can also be used to easily test and deploy APIs on AWS Lambda and AWS API Gateway
-- Used personally to greatly streamline DevOps
+- AWS API GatewayとAWS LambdaにAPIの作りやテスティングや配備も可能です
+- 個人ウェブサイトに使っております
