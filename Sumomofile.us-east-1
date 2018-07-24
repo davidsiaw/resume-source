@@ -1,0 +1,47 @@
+
+origin_code = <<-ORIGINCODE
+'use strict';
+exports.handler = (event, context, callback) => {
+    
+    // Extract the request from the CloudFront event that is sent to Lambda@Edge 
+    var request = event.Records[0].cf.request;
+
+    // Extract the URI from the request
+    var olduri = request.uri;
+
+    // Add index.html to after anything.
+    var newuri = olduri;
+    
+    var regex = /\\/[a-z0-9]+\\/?$/;
+    var match = olduri.match(regex);
+    if (match)
+    {
+      newuri = (olduri.replace(regex, function(match, $1, offset, original) 
+      {
+        return match.replace(/\\/$/, "") + "/index.html";
+      }))
+    }
+    
+    // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
+    console.log("Old URI: " + olduri);
+    console.log("New URI: " + newuri);
+    
+    // Replace the received URI with the URI that includes the index page
+    request.uri = newuri;
+    
+    // Return to CloudFront
+    return callback(null, request);
+
+};
+ORIGINCODE
+
+# old so it doesnt go delete-failed
+make_lambda(name: "ResumeOriginIndexAdder", files:[{name:"index.js", code:origin_code}])
+
+origin_lambda = make_lambda(name: "ResumeOriginRequestFixer", files:[{name:"index.js", code:origin_code}])
+
+origin_lambda_version = make "AWS::Lambda::Version" do
+    FunctionName origin_lambda.Arn
+end
+
+output "Version", origin_lambda_version

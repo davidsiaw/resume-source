@@ -1,7 +1,7 @@
 name: sumomo
 ---
 
-**※本ウェブサイトはこのツールを利用して作りました。**
+**※本ウェブサイトはこのツールを利用して作りました。[ソースコード](https://github.com/davidsiaw/resume-source)**
 
 Sumomoはクラウドシステム配備を簡単にする高機能Ruby DSLです。
 

@@ -1,0 +1,20 @@
+cloudflare_key=hidden_value(ENV['CLOUDFLARE_KEY'])
+cloudflare_email=hidden_value(ENV['CLOUDFLARE_EMAIL'])
+cert=hidden_value(ENV['RESUME_CERT'])
+
+edge_lambda=`bundle exec sumomo -r us-east-1 outputs resumeenvoriginlambda`.split("\n").
+	select {|x| x.start_with?("Version:")}[0].
+	sub("Version: ", "")
+	
+edge_lambda=hidden_value(edge_lambda)
+
+make_cdn_from_dir(
+	domain:"resume.davidsiaw.net", 
+	cert:cert, 
+	dns:cloudflare_dns(key:cloudflare_key, email:cloudflare_email), 
+	name:"ResumeContent", 
+	dir:"build",
+	lambda_assocs:{
+		"origin-request" => [ edge_lambda ]
+	}
+)

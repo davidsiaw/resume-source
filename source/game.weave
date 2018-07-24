@@ -2,7 +2,7 @@ include "util.rb"
 
 topnav_page "", "RESUME: David Siaw" do
 
-	make_menu
+	make_menu(:en)
 
 	request_js "js/game/gamepad.js"
 	request_js "js/game/Update.js"

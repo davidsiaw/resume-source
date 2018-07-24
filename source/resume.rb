@@ -11,6 +11,7 @@ def make_resume_printable(lang)
 	raw_page "#{lang}/printable", "RESUME: David Siaw" do
 		html do
 			head do
+				meta charset:"utf-8"
 				title "#{strings["resume"]}: David Siaw"
 				style <<-STYLE
 @page { margin: 0; }

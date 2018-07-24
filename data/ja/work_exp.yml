@@ -16,8 +16,8 @@
   :detail: 短いソフトウェアプロジェクトを完成するインターンシップ。携帯ラジオのソフトウェアにC++の使用の現実性の検討作業。
   :roles:
   - 複数の携帯ラジオモデルのUI抽出を作りました
-  - 組み込みシステム用のフォントコンバーターツールを作りました。
-  - ラジオファームウェアのコンパイラをGCC 2.9からGCC 4.0の移行作業とC++の対応作業を行いました。
+  - 組み込みシステム用のフォントのコンバーターツールを作りました。
+  - ラジオのファームウェアのコンパイラをGCC 2.9からGCC 4.0の移行作業とC++の対応作業を行いました。
 
 - :company: Telogis Inc.
   :position: ソフトウェアエンジニア
@@ -56,18 +56,17 @@
   :start_date: 2014/03
   :end_date: 2014/10
   :location: 東京
-  :detail: 6wavesに海外ゲームのローカリゼーションと日本市場リリースをスムーズに行えるためにリードエンジニアとして勤め始めました。
+  :detail: 6wavesには海外ゲームのローカリゼーションと日本市場にリリースをスムーズに行えるためにリードエンジニアとして勤めました。
   :roles: 
-  - Established streamlined processes for testing, continuous integration and continuous deployment as well as efficient and automated deployment to staging and production environments
-  - Maintained and added event features to Bubbleworld on Yahoo Mobage.
-  - Led an Engineering Team to feature-completion of a 6waves game
-  - Added social features to 6waves games including login bonuses, gift boxes, friends list, greeting and communication systems, login tracking
-  - Applied new game content and persistent-world mechanics to games
-  - Built server environments and tools to maintain social games using Amazon Web Services and Chef
-  - Built versatile testing system for server infrastructure usable on developers’ machines using Vagrant
-  - Built an Announcement Content Management System using Jekyll + Ruby
-  - Created abstraction layers for Japanese social game platforms
-
+  - プロダクトのテスティングと継続的インテグレーションと継続的デリバリーのプロセスを確立しました。
+  - 入社前に未存在したstagingとtest環境の組み立てと自動化を行いました。
+  - Yahooモバゲのゲームにゲームイベント管理と開発を行いました。
+  - 新しいゲームの開発をテクニカル方面に采配を振りました。
+  - ゲームにソシアルフィーチャー「ログインボーナス、報酬、フレンズリスト、挨拶システム等」の開発を行いました。 
+  - AWSとChefを使っているサーバー環境を管理するツールを作りました。
+  - Vagrantを使って開発者のPCにも環境変更のテスティングをできるようにツールを作りました。
+  - ニュース・発表システムをJekyll+Rubyで作りました。
+  - 日本のソシアルゲームプラットホーム（OpenSocial系）用の雑用ツールライブラリーを作りました。
   :languages:
   - Java
   - PHP
@@ -90,14 +89,13 @@
   :start_date: 2014/10
   :end_date: 2016/05
   :location: 東京
-  :detail: Joined this startup to lead the creation of automated infrastructure deployment for various web frameworks and languages
+  :detail: ヘッドエンジニアとして色んなフレームワークとプログラミング言語の使えるインフラ配備システムのデザインと開発を行いました。
   :roles:
-  - Designed a domain-specific language to generate AWS Cloudformation templates for different network topologies
-  - Established system using Docker containers for blue-green deployment, logging, provisoning and monitoring
-  - Constructed systems to perform testing locally
-  - Established procedures and standards for reliability testing and deployment
-  - Support integration of Mobingi’s cloud services with the workflow of various other companies
-  - Provide advice and consulting services to existing customers with varied requirements
+  - 色んなVPCのセットアップを表現できるようにAWS CloudformationテンプレートジェネレータのDSLを作りました。
+  - Dockerコンテナを使っているサーバーに常にBlue-Green Deployment、ロギング、配備、監視の存在しているシステムを作りました。
+  - サービスの信頼性をアップするため、ストレステスティングやインテグレーションテスティング環境とプロセスを整えました。
+  - モビンギのクラウドサービスをほかの会社のワークフローとシステムの連携を行いました。
+  - 様々のお客様のクラウドシステムと要求分析をして、アドバイスと推奨を提供しました。
   :languages:
   - Ruby
   - C++
@@ -117,17 +115,16 @@
   :start_date: 2016/07
   :end_date: 2018/01
   :location: 東京
-  :detail: HouseCare, the product created by this new company provides property management services for Airbnb/Minpaku owners in Japan. I joined this company to help them improve operations through the use of software and computing.
+  :detail: 日本のAirbnbや民泊オーナー向けの家事代行サービスハウスケアに、クリーナースタッフやクリーニング仕事やカスタマーの管理用ツールとハウスケアのウェブサイトの開発とメインテナンスを行いました。
   :roles: 
-  - Moved devops to a highly reliable, resilient and secure in-house system
-  - Established a highly efficient system of continuous integration and deployment using AWS ECS, Docker and Circle CI
-  - Automated and streamlined logging, update and error reporting directly to various teams using a combination of Slack and newly available web services
-  - Coordinated solving highly clerical issues caused by large growth with internal team requirement gathering and software develoipment
-  - Organized and managed in-office and online services that the company uses to allow smooth continuous operations
-  - Created an automated booking system that fully automates the product's subscription service, removing hours of clerical work
-  - Update and improve the company's backoffice system to greatly smooth out operations and greatly reduce manual communication
-  - Improve system statistics to assist with data analysis and investor reporting
-  - Created a system to automate accounting and invoicing, saving hours of time spent doing clerical work
+  - DevOpsとサーバー管理を社内に移動しました。
+  - AWS ECS、Docker、Circle CIを利用して社内ソフトウェアとウェブサイトの継続的インテグレーションと継続的デリバリーのプロセスを整いました。
+  - 各チームを使っているSlackサーバーにロギングとエラー報告を連携しました。
+  - 大きなビジネス拡大に発生した事務的の仕事をソフトウェアで自動化にしました。
+  - 会社の様々のオンラインサービスの管理を行いました。
+  - 自動予約システムをデザインして開発を行いました。
+  - 事務的の管理ツールをいろいろ作って、会社のバックオフィスの効率をアップしました
+  - 投資者向けの社内データ分析と統計情報の報告ウェブサイトを作りました。
   :languages:
   - Ruby
   - JavaScript
@@ -144,6 +141,9 @@
   - MakeLeaps
   - Circle CI
   - Cloudflare
+  - New Relic
+  - Mixpanel
   :oses:
   - Linux
   - Mac OS X
+  

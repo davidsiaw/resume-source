@@ -1,7 +1,7 @@
 name: weaver
 ---
 
-**※本ウェブサイトはこのツールを使って作りました。**
+**※本ウェブサイトはこのツールを使って作りました。[ソースコード](https://github.com/davidsiaw/resume-source)**
 
 Weaverは静的ウェブサイトを作るツールです。ウェブサイトの書き方はWeaver専用のRuby DSLでする。
 

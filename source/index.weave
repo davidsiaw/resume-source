@@ -27,21 +27,21 @@ center_page "", "RESUME: David Siaw" do
 		end
 	end
 	row do
-		col 2 do
+		col 3 do
 		end
-		col 8, lg:0, md:0, sm: 0 do
+		col 6, lg:0, md:0, sm: 0 do
 			lang_select_button :en
 		end
-		col 2 do
+		col 3 do
 		end
 	end
 	row do
-		col 2 do
+		col 3 do
 		end
-		col 8, lg:0, md:0, sm: 0 do
+		col 6, lg:0, md:0, sm: 0 do
 			lang_select_button :ja
 		end
-		col 2 do
+		col 3 do
 		end
 	end
 end

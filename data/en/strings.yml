@@ -16,7 +16,7 @@ location: Location
 start_year: Start Year
 end_year: End Year
 major: Major
-languages: languages
+languages: Languages
 name: Project Name
 description: Description
 about: About
