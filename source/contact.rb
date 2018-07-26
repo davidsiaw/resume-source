@@ -24,6 +24,10 @@ def make_contact_page(lang)
 
 		end
 
+		on_page_load <<-SCRIPT
+			mixpanel.track("contact", {lang:"#{lang.to_s}"});
+		SCRIPT
+
 	end
 
 end

@@ -2,6 +2,8 @@ include "resume.rb"
 include "contact.rb"
 include "util.rb"
 
+set_global :mixpanel_token, ENV['MIXPANEL_TOKEN']
+
 center_page "", "RESUME: David Siaw" do
 	row do
 
@@ -44,6 +46,10 @@ center_page "", "RESUME: David Siaw" do
 		col 3 do
 		end
 	end
+
+	on_page_load <<-SCRIPT
+		mixpanel.track("main");
+	SCRIPT
 end
 
 make_pages

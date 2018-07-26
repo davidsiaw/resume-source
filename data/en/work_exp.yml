@@ -121,7 +121,7 @@
   - Moved devops to a highly reliable, resilient and secure in-house system
   - Established a highly efficient system of continuous integration and deployment using AWS ECS, Docker and Circle CI
   - Automated and streamlined logging, update and error reporting directly to various teams using a combination of Slack and newly available web services
-  - Coordinated solving highly clerical issues caused by large growth with internal team requirement gathering and software develoipment
+  - Coordinated solving highly clerical issues caused by large growth with internal team requirement gathering and software development
   - Organized and managed in-office and online services that the company uses to allow smooth continuous operations
   - Created an automated booking system that fully automates the product's subscription service, removing hours of clerical work
   - Update and improve the company's backoffice system to greatly smooth out operations and greatly reduce manual communication
@@ -144,7 +144,7 @@
   - Circle CI
   - Cloudflare
   - New Relic
-  - 
+  - Mixpanel
   :oses:
   - Linux
   - Mac OS X

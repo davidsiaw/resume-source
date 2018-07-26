@@ -56,17 +56,17 @@ def fancy_table(lang:, data:, show_columns:, tag_columns:{}, link_columns:[])
 									td do
 										if item[k]
 											item[k].each do |tag|
-												badge tag, rounded: true, type: tag_columns[k]
+												badge tag, rounded: true, type: tag_columns[k], onclick: "mixpanel.track('clicked_#{k}', {lang: '#{lang}', string: '#{tag}'});"
 												text " "
 											end
 										end
 									end
 								elsif link_columns.include?(k)
-									td do
+									td onclick: "mixpanel.track('clicked_#{k}', {lang: '#{lang}', string: '#{item[k]}'});" do
 										hyperlink "#{v}"
 									end
 								else
-									td do
+									td onclick: "mixpanel.track('clicked_#{k}', {lang: '#{lang}', string: '#{item[k]}'});" do
 										if v.is_a?(Array)
 											ul do
 												v.each do |element|
@@ -108,7 +108,7 @@ def fancy_table(lang:, data:, show_columns:, tag_columns:{}, link_columns:[])
 				accordion do
 					data.each do |item|
 						k = column_array[0][0]
-						tab item[k] do
+						tab item[k], mixpanel_event_name: "clicked_#{k}", mixpanel_event_props: {lang: "#{lang}", string: "#{item[k]}"} do
 							for i in 1..column_array.count - 1
 								k = column_array[i][0]
 								v = item[k]
