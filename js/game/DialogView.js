@@ -19,9 +19,13 @@ function DialogView(x,y,z,w,h,windowSkin)
     var arrowAnim = 0;
     var arrowAnimStep = 1/4;
     
+    var prevArrowAnim = 0;
+    var prevArrowAnimStep = 1/4;
+
     var text = [];
     
     var showNextArrow = false;
+    var showPrevArrow = false;
     
     //console.log(cc)
 
@@ -154,6 +158,13 @@ function DialogView(x,y,z,w,h,windowSkin)
 		    ctx.fillText(text[row], tx+18, ty+18+32*row);	
 		}
 		
+		if (showPrevArrow) {
+		    //prevArrowAnim+=prevArrowAnimStep;
+		    //prevArrowAnim %= 4;
+		    //var arrowAnimInt = Math.floor(prevArrowAnim);
+		    //ctx.drawImage(image, 96+(arrowAnimInt % 2)*16, 64+(arrowAnimInt >> 1)*16, 16, 16, tx+tw-32, ty+16, 16, 16);
+		}
+
 		if (showNextArrow) {
 		    arrowAnim+=arrowAnimStep;
 		    arrowAnim %= 4;
@@ -296,5 +307,15 @@ function DialogView(x,y,z,w,h,windowSkin)
 		showNextArrow = false;
     }
     
+    this.showPrevArrow = function()
+    {
+		showPrevArrow = true;
+    }
+    
+    this.hidePrevArrow = function()
+    {
+		showPrevArrow = false;
+    }
+
     return this;
 }

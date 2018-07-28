@@ -155,8 +155,9 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 	this.getCharacters = function()
 	{
 		return characters;
-	
 	}
+
+
 
 	this.getRunningAnimations = function()
 	{
@@ -199,7 +200,9 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 				dy: 0,
 				direction: 0,
 				slowness: 16,
-				charShift: charShift
+				charShift: charShift,
+				pixeloffsetx: 0,
+				pixeloffsety: 0,
 			}
 		);
 		return characters.length - 1;
@@ -253,8 +256,9 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 				}
 				else
 				{
-					onCollide(getOccupant(char.tilex+dx, char.tiley));
-					//console.log("collide");
+					var a = getOccupant(char.tilex+dx, char.tiley);
+					onCollide(a);
+					console.log("collide", a);
 					return;
 				}
 			}
@@ -275,8 +279,9 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 				}
 				else
 				{
-					onCollide(getOccupant(char.tilex, char.tiley+dy));
-					//console.log("collide");
+					var a = getOccupant(char.tilex, char.tiley+dy);
+					onCollide(a);
+					console.log("collide", a);
 					return;
 				}
 			}

@@ -1,5 +1,7 @@
 include "util.rb"
 
+set_global :mixpanel_token, ENV['MIXPANEL_TOKEN']
+
 topnav_page "", "RESUME: David Siaw" do
 
 	make_menu(:en)
@@ -26,5 +28,9 @@ topnav_page "", "RESUME: David Siaw" do
 			end
 		end
 	end
+
+	on_page_load <<-SCRIPT
+		mixpanel.track("game");
+	SCRIPT
 	
 end

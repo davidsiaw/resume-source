@@ -129,6 +129,7 @@ function GameState(input, world, map)
     	    self.currChar = interactor;
     	    self.interactee = interactee;
 
+
             function resume(args)
             {
                 if (!interactor || (self.characters[interactor] && self.characters[interactor].charScriptRunning))
@@ -137,7 +138,7 @@ function GameState(input, world, map)
                     {
                         self.currChar = interactor;
                         self.interactee = interactee;
-                        script[cur++](self, invoke)
+                        script[cur++](self, invoke);
                     }, 0);
                 }
                 else
@@ -158,6 +159,14 @@ function GameState(input, world, map)
 
 var Character =
 {
+    faceDown: function(gameState, next)
+    {
+        var world = gameState.world;
+        world.rotateCharacter(gameState.currChar, 2);
+        
+        next();
+    },
+    
     walkLeft: function(gameState, next)
     {
         gameState.world.moveCharacter(gameState.currChar, 3, true, function()
@@ -212,6 +221,8 @@ var Character =
         var interactorPos = world.getCharacterPosition(gameState.currChar);
         var interacteePos = world.getCharacterPosition(gameState.interactee);
         
+        //console.log(gameState.currChar,interactorPos, gameState.interactee, interacteePos)
+
         if (interactorPos.x < interacteePos.x) {
             world.rotateCharacter(gameState.currChar, 3);
         }
@@ -266,15 +277,16 @@ var Character =
     {
         if (gameState.world.getModel().getCharacter(gameState.currChar))
         {
+
             gameState.world.moveCharacter(gameState.currChar,
-            gameState.world.getCharacterRotation(gameState.currChar), true, function()
-            {
-                next();
-            },
-            function(other)
-            {
-                gameState.collide(gameState.currChar, other, next);
-            });
+                gameState.world.getCharacterRotation(gameState.currChar), true, function()
+                {
+                    next();
+                },
+                function(other)
+                {
+                    gameState.collide(gameState.currChar, other, next);
+                });
         }
         else
         {
@@ -477,6 +489,34 @@ var Character =
             next();
         }
     },
+
+
+    carryFront: function(gameState, next)
+    {
+        var world = gameState.world;
+
+        var frontTile = gameState.world.getModel().getFrontTile(gameState.currChar, 1);
+
+        var carriedChar = gameState.world.getCharacterCarriedBy(gameState.currChar);
+
+        if (gameState.world.isACarrier(gameState.currChar) === false)
+        {
+            // pick up
+            var x = world.setCarryingFront(gameState.currChar);
+        }
+        else if ( gameState.world.canMoveTo(carriedChar, frontTile.x, frontTile.y) )
+        {
+            //console.log("canmove", carriedChar, frontTile.x, frontTile.y, gameState.world.canMoveTo(carriedChar, frontTile.x, frontTile.y))
+            // drop
+            var x = world.setUncarry(gameState.currChar);
+        }
+
+        console.log("front:",world.getOccupant(frontTile.x, frontTile.y))
+
+
+        next();
+    },
+
 }
 
 var Interaction =
@@ -508,6 +548,7 @@ var Interaction =
 
     turnBackOnInteractor: function(gameState, next)
     {
+        console.log("cc", gameState.currChar, gameState.interactee);
         var world = gameState.world;
         var interactorPos = world.getCharacterPosition(gameState.currChar);
         var interacteePos = world.getCharacterPosition(gameState.interactee);
@@ -792,6 +833,15 @@ var Script =
                     theDialog.hideNextArrow();
                 }
 
+                if (topDisplay > 0)
+                {
+                    theDialog.showPrevArrow();
+                }
+                else
+                {
+                    theDialog.hidePrevArrow();
+                }
+
                 if (selectionChangeFunc)
                 {
                     selectionChangeFunc(selection);
@@ -888,5 +938,9 @@ var Script =
             func(gameState);
             next();
         }
-    }
+    },
+
+
+
+
 }

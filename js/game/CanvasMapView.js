@@ -31,6 +31,28 @@ function CanvasMapView(x,y,z,w,h,mapModel)
     var lastUpdateTime = new Date();
     
     function sign(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; }
+
+    function drawCharacters(characters, cameraPos)
+    {
+        characters = characters.slice(0);
+        characters.sort(function(a,b){ return a.y - b.y });
+        
+        for(var idx in characters)
+        {
+            var char = characters[idx];
+        
+            if (char === undefined) {
+              continue;
+            }
+            var left = ((char.x+1/2) * tileSize - char.width/2 - (cameraPos.x) * tileSize) ;
+            var top = ((char.y+1) * tileSize - char.height - (cameraPos.y) * tileSize) ;
+            
+            context.drawImage(
+                charSetImg,
+                char.offsetx,char.offsety,char.width,char.height,
+                left + char.pixeloffsetx,top + char.charShift + char.pixeloffsety,char.width,char.height);
+        }
+    }
     
     function update()
     {
@@ -108,25 +130,7 @@ function CanvasMapView(x,y,z,w,h,mapModel)
             }
         }
             
-        var characters = mapModel.getCharacters().slice(0);
-        
-        characters.sort(function(a,b){ return a.y - b.y });
-        
-        for(var idx in characters)
-        {
-            var char = characters[idx];
-	    
-    	    if (char === undefined) {
-    		  continue;
-    	    }
-            var left = ((char.x+1/2) * tileSize - char.width/2 - (cameraPos.x) * tileSize) ;
-            var top = ((char.y+1) * tileSize - char.height - (cameraPos.y) * tileSize) ;
-            
-            context.drawImage(
-                charSetImg,
-                char.offsetx,char.offsety,char.width,char.height,
-                left,top + char.charShift,char.width,char.height);
-        }
+        drawCharacters(mapModel.getCharacters(), cameraPos);
 
 
         for (var y = 0; y < tilesPerHeight; y++)

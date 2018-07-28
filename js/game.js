@@ -304,10 +304,12 @@ function firstmap()
 		Character.centerCamera,
 		Character.assignDirectionalControl,
 		Character.assignCollide([]),
-		Character.assignZ(showControls),
+		Character.assignZ([
+			Character.carryFront
+		]),
 		//Character.assignX([Character.addAnimation("wings")]),
 		Character.assignA([Character.interact]),
-		Character.assignS([Character.spawnCharacterAtFront(2,-16,fireballScript)])
+		//Character.assignS([Character.spawnCharacterAtFront(2,-16,fireballScript)])
 	];
 	
 	var boyTalkedToScript =
@@ -400,6 +402,79 @@ function firstmap()
 		Character.assignHitBySomething(boxCollide)
 	];
 
+
+
+	var girl1Talk =
+	[
+		Interaction.pauseInteractee,
+		Script.showDialog("BOTTOM"),
+		Script.speechDialog("BOTTOM", ["宇宙からの愛のエネルギーを", "胸が痛いほどに感じています"]),
+		Script.simpleSelectDialog("BOTTOM", ["Kagami", "Tsukasa", "Konata", "Miyuki", "Kusakabe", "Hiyori"], 
+			function(sel){}),
+		Script.hideDialog("BOTTOM"),
+		Interaction.resumeInteractee
+	];
+	
+	var girl1 =
+	[
+		Character.faceDown,
+		Character.assignInteract(girl1Talk),
+	];
+	
+
+	var girl2Talk =
+	[
+		Interaction.pauseInteractee,
+		Script.showDialog("BOTTOM"),
+		Script.speechDialog("BOTTOM", ["", "胸が痛いほどに感じています"]),
+		Script.simpleSelectDialog("BOTTOM", ["Kagami", "Tsukasa", "Konata", "Miyuki", "Kusakabe", "Hiyori"], 
+			function(sel){}),
+		Script.hideDialog("BOTTOM"),
+		Interaction.resumeInteractee
+	];
+	
+	var girl2 =
+	[
+		Character.faceDown,
+		Character.assignInteract(girl2Talk),
+	];
+
+
+	var girl3Talk =
+	[
+		Interaction.pauseInteractee,
+		Script.showDialog("BOTTOM"),
+		Script.speechDialog("BOTTOM", ["Dekomori", "胸が痛いほどに感じています"]),
+		Script.simpleSelectDialog("BOTTOM", ["Kagami", "Tsukasa", "Konata", "Miyuki", "Kusakabe", "Hiyori"], 
+			function(sel){}),
+		Script.hideDialog("BOTTOM"),
+		Interaction.resumeInteractee
+	];
+	
+	var girl3 =
+	[
+		Character.faceDown,
+		Character.assignInteract(girl3Talk),
+	];
+
+
+	var davidTalk =
+	[
+		Interaction.pauseInteractee,
+		Script.showDialog("BOTTOM"),
+		Script.speechDialog("BOTTOM", ["David", "胸が痛いほどに感じています"]),
+		Script.simpleSelectDialog("BOTTOM", ["Kagami", "Tsukasa", "Konata", "Miyuki", "Kusakabe", "Hiyori"], 
+			function(sel){}),
+		Script.hideDialog("BOTTOM"),
+		Interaction.resumeInteractee
+	];
+
+	var david =
+	[
+		Character.faceDown,
+		Character.assignInteract(davidTalk),
+	];
+
 	var mainScript =
 	[
 		Script.customAction(function(theGameState) { gameState = theGameState; }),
@@ -409,22 +484,26 @@ function firstmap()
 		Script.hideDialog("LEFT"),
 		Script.hideDialog("RIGHT"),
 
-		Script.addCharacter(5,0,0,-16,heroScript),
-		Script.addCharacter(1,5,5,-16,girlScript),
-		Script.addCharacter(3,13,13,-16,boyScript),
-		Script.addCharacter(5,1,1,-16,walkUpDown),
-		Script.addCharacter(3,6,5,-16,[Character.walkDown]),
-		Script.addCharacter(7,7,5,-16,[Character.walkDown]),
-		Script.addCharacter(4,8,5,-16,[Character.walkDown]),
-		Script.addCharacter(9,10,10,0,boxScript),
-		Script.addCharacter(9,11,10,0,boxScript),
-		Script.addCharacter(9,12,10,0,boxScript),
-		Script.addCharacter(9,13,10,0,boxScript),
-		Script.addCharacter(9,14,10,0,boxScript),
-		Script.addCharacter(10,15,10,0,boxScript),
-		Script.addCharacter(10,16,10,0,boxScript),
-		Script.addCharacter(10,17,10,0,boxScript),
-		Script.addCharacter(0,18,10,-16,boxScript),
+		Script.addCharacter(5,5,5,-16,heroScript),
+
+		Script.addCharacter(3,6,5,-16,girl1),
+		Script.addCharacter(7,7,5,-16,girl2),
+		Script.addCharacter(4,8,5,-16,david),
+		Script.addCharacter(1,9,5,-16,girl3),
+
+		//Script.addCharacter(1,5,5,-16,girlScript),
+		//Script.addCharacter(3,13,13,-16,boyScript),
+		//Script.addCharacter(5,1,1,-16,walkUpDown),
+		//Script.addCharacter(4,8,5,-16,[Character.walkDown]),
+		Script.addCharacter(10,10,10,0,boxScript),
+		//Script.addCharacter(9,11,10,0,boxScript),
+		//Script.addCharacter(9,12,10,0,boxScript),
+		//Script.addCharacter(9,13,10,0,boxScript),
+		//Script.addCharacter(9,14,10,0,boxScript),
+		//Script.addCharacter(10,15,10,0,boxScript),
+		//Script.addCharacter(10,16,10,0,boxScript),
+		//Script.addCharacter(10,17,10,0,boxScript),
+		//Script.addCharacter(0,18,10,-16,boxScript),
 		//Script.showDialog(dialog),
 		//Script.speechDialog(dialog, ["Sie sind das Essen und we sind die Jager", "", "This is the world"]),
 		//Script.speechDialog(dialog, ["She was very nervous"]),

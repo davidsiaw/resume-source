@@ -44,25 +44,9 @@ function MapView(x,y,z,w,h,mapModel)
 	{
 		camera = cam;
 	}
-	
-	function update()
+
+	function drawCharacters(cameraPos, characters)
 	{
-		var cameraPos = camera.getLocation();
-		
-		for (var y = 0; y < tilesPerHeight; y++)
-		{
-			for (var x = 0; x < tilesPerWidth; x++)
-			{
-				var texcoord = mapModel.getTileOffset(cameraPos.x+x,cameraPos.y+y);
-				var image = mapModel.getImage();
-				rows[y][x].style.background = "url(" +image + ") -" + texcoord.x + "px -" + texcoord.y + "px no-repeat"
-				rows[y][x].style.top = ((y - 1 - (cameraPos.y%1)) * tileSize )+"px";
-				rows[y][x].style.left = ((x - 1 - (cameraPos.x%1)) * tileSize)+"px";
-				rows[y][x].style.zIndex = z - tilesPerHeight + y - 3;
-			}
-		}
-		
-		var characters = mapModel.getCharacters();
 		for(var idx in characters)
 		{
 			//console.log(characters[idx]);
@@ -86,6 +70,30 @@ function MapView(x,y,z,w,h,mapModel)
 			cElem.style.top = ((char.y+1) * tileSize - char.height - (cameraPos.y) * tileSize) + "px";
 			cElem.style.zIndex = z - tilesPerHeight + char.y - Math.floor(cameraPos.y) - 1;
 		}
+	}
+	
+	function update()
+	{
+		var cameraPos = camera.getLocation();
+		
+		for (var y = 0; y < tilesPerHeight; y++)
+		{
+			for (var x = 0; x < tilesPerWidth; x++)
+			{
+				var texcoord = mapModel.getTileOffset(cameraPos.x+x,cameraPos.y+y);
+				var image = mapModel.getImage();
+				rows[y][x].style.background = "url(" +image + ") -" + texcoord.x + "px -" + texcoord.y + "px no-repeat"
+				rows[y][x].style.top = ((y - 1 - (cameraPos.y%1)) * tileSize )+"px";
+				rows[y][x].style.left = ((x - 1 - (cameraPos.x%1)) * tileSize)+"px";
+				rows[y][x].style.zIndex = z - tilesPerHeight + y - 3;
+			}
+		}
+		
+		drawCharacters(cameraPos, mapModel.getUncarriedCharacters());
+
+		var carriedPos = cameraPos;
+		carriedPos.y + 32;
+		drawCharacters(carriedPos, mapModel.getCarriedCharacters());
 	}
 	
 	setInterval(update, 15);
