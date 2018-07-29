@@ -1,4 +1,4 @@
-function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
+function MapModel(prerenderedMap, animations, charset, onetileCharset, tileSize, mapfunc)
 {
 	// constants
 	var self = this;
@@ -22,6 +22,11 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 	{
 		return charset;
 	}
+
+	this.getOneTileCharacterImage = function()
+	{
+		return onetileCharset;
+	}
 	
 	var animOffset = 0;
 	var characters = [];
@@ -32,19 +37,19 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 	
 	function getDirection(direction) {
 		var dir = {dx:0, dy:0};
-		if(direction == 0)
+		if(direction == Directions.Up)
 		{
 			dir.dy = -1;
 		}
-		if(direction == 1)
+		if(direction == Directions.Right)
 		{
 			dir.dx = 1;
 		}
-		if(direction == 2)
+		if(direction == Directions.Down)
 		{
 			dir.dy = 1;
 		}
-		if(direction == 3)
+		if(direction == Directions.Left)
 		{
 			dir.dx = -1;
 		}
@@ -184,9 +189,19 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 	this.addCharacter = function(typeid,x,y,charShift)
 	{
 		charShift = charShift || 0;
+
+		var baseoffsetx = typeid * 192;
+		var multitile = true;
+		if (typeid >= 10000)
+		{
+			baseoffsetx = 48 * (typeid - 10000);
+			multitile = false;
+		}
+
 		characters.push(
 			{
 				id: characters.length,
+				typeid: typeid,
 				width: 48,
 				height: 64,
 				tilex: x,
@@ -195,10 +210,11 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 				y: y,
 				offsetx: 0,
 				offsety: 0,
-				baseoffsetx: typeid * 192,
+				baseoffsetx: baseoffsetx,
+				multitile: multitile,
 				dx: 0,
 				dy: 0,
-				direction: 0,
+				direction: Directions.Up,
 				slowness: 16,
 				charShift: charShift,
 				pixeloffsetx: 0,
@@ -207,7 +223,6 @@ function MapModel(prerenderedMap, animations, charset, tileSize, mapfunc)
 		);
 		return characters.length - 1;
 	}
-
 	
 	this.removeCharacter = function(char)
 	{

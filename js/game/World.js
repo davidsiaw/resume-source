@@ -1,9 +1,6 @@
-var Passable = {
-    Ground: 0x1,
-    Air: 0x2,
-}
 
-function World(tileset, charset, background, tileinfo, mapinfo)
+
+function World(tileset, charset, onetileCharset, background, tileinfo, mapinfo)
 {
     var w = mapinfo.width;
     var h = mapinfo.height;
@@ -134,7 +131,7 @@ function World(tileset, charset, background, tileinfo, mapinfo)
     
     var positions = {};
     var tiles = {};
-    var model = new MapModel(prerenderedMap, animations, charset, tileSize, function(x,y)
+    var model = new MapModel(prerenderedMap, animations, charset, onetileCharset, tileSize, function(x,y)
     {
         x = Math.floor(x);
         y = Math.floor(y);

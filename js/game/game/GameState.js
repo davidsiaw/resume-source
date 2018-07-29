@@ -85,7 +85,7 @@ function GameState(input, world, map)
         script = strippedScript;
 
         function invoke()
-	    {
+        {
             if (!running)
             {
                 return;
@@ -111,13 +111,13 @@ function GameState(input, world, map)
             }
 
             if (self.repeat)
-	        {
+            {
                 cur = 0;
                 self.repeat = false;
             }
 
             if (cur >= script.length)
-	        {
+            {
                 if (onEnd)
                 {
                     onEnd();
@@ -125,9 +125,9 @@ function GameState(input, world, map)
 
                 return;
             }
-	    
-    	    self.currChar = interactor;
-    	    self.interactee = interactee;
+        
+            self.currChar = interactor;
+            self.interactee = interactee;
 
 
             function resume(args)
@@ -169,11 +169,11 @@ var Character =
     
     walkLeft: function(gameState, next)
     {
-        gameState.world.moveCharacter(gameState.currChar, 3, true, function()
+        gameState.world.moveCharacter(gameState.currChar, Directions.Left, true, function()
         {
             next();
         },
-	    function(other)
+        function(other)
         {
             gameState.collide(gameState.currChar, other, next);
         });
@@ -181,11 +181,11 @@ var Character =
     
     walkRight: function(gameState, next)
     {
-        gameState.world.moveCharacter(gameState.currChar, 1, true, function()
+        gameState.world.moveCharacter(gameState.currChar, Directions.Right, true, function()
         {
             next();
         },
-	    function(other)
+        function(other)
         {
             gameState.collide(gameState.currChar, other, next);
         });
@@ -193,11 +193,11 @@ var Character =
     
     walkUp: function(gameState, next)
     {
-        gameState.world.moveCharacter(gameState.currChar, 0, true, function()
+        gameState.world.moveCharacter(gameState.currChar, Directions.Up, true, function()
         {
             next();
         },
-	    function(other)
+        function(other)
         {
             gameState.collide(gameState.currChar, other, next);
         });
@@ -205,11 +205,11 @@ var Character =
     
     walkDown: function(gameState, next)
     {
-        gameState.world.moveCharacter(gameState.currChar, 2, true, function()
+        gameState.world.moveCharacter(gameState.currChar, Directions.Down, true, function()
         {
             next();
         },
-	    function(other)
+        function(other)
         {
             gameState.collide(gameState.currChar, other, next);
         });
@@ -224,19 +224,19 @@ var Character =
         //console.log(gameState.currChar,interactorPos, gameState.interactee, interacteePos)
 
         if (interactorPos.x < interacteePos.x) {
-            world.rotateCharacter(gameState.currChar, 3);
+            world.rotateCharacter(gameState.currChar, Directions.Left);
         }
         
         if (interactorPos.x > interacteePos.x) {
-            world.rotateCharacter(gameState.currChar, 1);
+            world.rotateCharacter(gameState.currChar, Directions.Right);
         }
         
         if (interactorPos.y < interacteePos.y) {
-            world.rotateCharacter(gameState.currChar, 0);
+            world.rotateCharacter(gameState.currChar, Directions.Up);
         }
         
         if (interactorPos.y > interacteePos.y) {
-            world.rotateCharacter(gameState.currChar, 2);
+            world.rotateCharacter(gameState.currChar, Directions.Down);
         }
         
         next();
@@ -245,32 +245,32 @@ var Character =
     spawnCharacterAtFront: function(charNum, shift, script)
     {
         return function(gameState, next)
-    	{
-    	    if (gameState.world.getCharacterInFrontOf(gameState.currChar) === undefined)
-    	    {
-        		var front = gameState.world.getFrontOf(gameState.currChar);
-        	    
-        		var char = gameState.world.addCharacter(charNum, front.x, front.y, shift);
-        		gameState.world.rotateCharacter(char, gameState.world.getCharacterRotation(gameState.currChar));
-        		gameState.runScript(script, char);
-        		
-        		gameState.characters[char] = new GameCharacter(char);
-    	    }
-    	    
-    	    next();
-    	}
+        {
+            if (gameState.world.getCharacterInFrontOf(gameState.currChar) === undefined)
+            {
+                var front = gameState.world.getFrontOf(gameState.currChar);
+                
+                var char = gameState.world.addCharacter(charNum, front.x, front.y, shift);
+                gameState.world.rotateCharacter(char, gameState.world.getCharacterRotation(gameState.currChar));
+                gameState.runScript(script, char);
+                
+                gameState.characters[char] = new GameCharacter(char);
+            }
+            
+            next();
+        }
     },
     
     setIsFlying: function(gameState, next)
     {
-    	gameState.world.setMobility(gameState.currChar, Passable.Air);
-    	next();
+        gameState.world.setMobility(gameState.currChar, Passable.Air);
+        next();
     },
     
     setIsNotFlying: function(gameState, next)
     {
-    	gameState.world.setMobility(gameState.currChar, Passable.Ground);
-    	next();
+        gameState.world.setMobility(gameState.currChar, Passable.Ground);
+        next();
     },
     
     walkForward: function(gameState, next)
@@ -307,111 +307,111 @@ var Character =
     
     centerCamera: function(gameState, next)
     {
-    	//console.log(slowness)
-    	var camera = new MapHeroCamera(gameState.map, gameState.world.getModel(), gameState.currChar);
-    	gameState.map.setCamera(camera);
-    	next();
+        //console.log(slowness)
+        var camera = new MapHeroCamera(gameState.map, gameState.world.getModel(), gameState.currChar);
+        gameState.map.setCamera(camera);
+        next();
     },
     
     assignDirectionalControl: function(gameState, next)
     {
-    	function walkAroundActions(theChar)
-    	{
-    		this.leftArrowAction = function()
-    		{
-                gameState.world.rotateCharacter(theChar, 3);
-    		    gameState.world.moveCharacter(theChar, 3, true, function(){},
+        function walkAroundActions(theChar)
+        {
+            this.leftArrowAction = function()
+            {
+                gameState.world.rotateCharacter(theChar, Directions.Left);
+                gameState.world.moveCharacter(theChar, Directions.Left, true, function(){},
                 function(other)
                 {
                     gameState.collide(theChar, other, function(){});
                 });
-    		};
-    		this.rightArrowAction = function()
-    		{
-                gameState.world.rotateCharacter(theChar, 1);
-    		    gameState.world.moveCharacter(theChar, 1, true, function(){},
+            };
+            this.rightArrowAction = function()
+            {
+                gameState.world.rotateCharacter(theChar, Directions.Right);
+                gameState.world.moveCharacter(theChar, Directions.Right, true, function(){},
                 function(other)
                 {
                     gameState.collide(theChar, other, function(){});
                 });
-    		};
-    		this.upArrowAction = function()
-    		{
-                gameState.world.rotateCharacter(theChar, 0);
-    		    gameState.world.moveCharacter(theChar, 0, true, function(){},
+            };
+            this.upArrowAction = function()
+            {
+                gameState.world.rotateCharacter(theChar, Directions.Up);
+                gameState.world.moveCharacter(theChar, Directions.Up, true, function(){},
                 function(other)
                 {
                     gameState.collide(theChar, other, function(){});
                 });
-    		};
-    		this.downArrowAction = function()
-    		{
-                gameState.world.rotateCharacter(theChar, 2);
-    		    gameState.world.moveCharacter(theChar, 2, true, function(){},
+            };
+            this.downArrowAction = function()
+            {
+                gameState.world.rotateCharacter(theChar, Directions.Down);
+                gameState.world.moveCharacter(theChar, Directions.Down, true, function(){},
                 function(other)
                 {
                     gameState.collide(theChar, other, function(){});
                 });
-    		};
-    	}
-    	gameState.input.setActions(new walkAroundActions(gameState.currChar));
-    	next();
+            };
+        }
+        gameState.input.setActions(new walkAroundActions(gameState.currChar));
+        next();
     },
 
     assignZ: function(script)
     {
-    	return function(gameState, next)
-    	{
-    	    var currActions = gameState.input.getActions();
-    	    var currChar = gameState.currChar;
-    	    currActions.zActionOnce = function() { gameState.runScript(script, currChar); };
-    	    gameState.input.setActions(currActions);
-    	    next();
-    	}
+        return function(gameState, next)
+        {
+            var currActions = gameState.input.getActions();
+            var currChar = gameState.currChar;
+            currActions.zActionOnce = function() { gameState.runScript(script, currChar); };
+            gameState.input.setActions(currActions);
+            next();
+        }
     },
     
     assignX: function(script)
     {
-    	return function(gameState, next)
-    	{
-    	    var currActions = gameState.input.getActions();
-    	    var currChar = gameState.currChar;
-    	    currActions.xActionOnce = function() { gameState.runScript(script, currChar); };
-    	    gameState.input.setActions(currActions);
-    	    next();
-    	}
+        return function(gameState, next)
+        {
+            var currActions = gameState.input.getActions();
+            var currChar = gameState.currChar;
+            currActions.xActionOnce = function() { gameState.runScript(script, currChar); };
+            gameState.input.setActions(currActions);
+            next();
+        }
     },
     
     assignA: function(script)
     {
-    	return function(gameState, next)
-    	{
-    	    var currActions = gameState.input.getActions();
-    	    var currChar = gameState.currChar;
-    	    currActions.aActionOnce = function() { gameState.runScript(script, currChar); };
-    	    gameState.input.setActions(currActions);
-    	    next();
-    	}
+        return function(gameState, next)
+        {
+            var currActions = gameState.input.getActions();
+            var currChar = gameState.currChar;
+            currActions.aActionOnce = function() { gameState.runScript(script, currChar); };
+            gameState.input.setActions(currActions);
+            next();
+        }
     },
     
     assignS: function(script)
     {
-    	return function(gameState, next)
-    	{
-    	    var currActions = gameState.input.getActions();
-    	    var currChar = gameState.currChar;
-    	    currActions.sActionOnce = function() { gameState.runScript(script, currChar); };
-    	    gameState.input.setActions(currActions);
-    	    next();
-    	}
+        return function(gameState, next)
+        {
+            var currActions = gameState.input.getActions();
+            var currChar = gameState.currChar;
+            currActions.sActionOnce = function() { gameState.runScript(script, currChar); };
+            gameState.input.setActions(currActions);
+            next();
+        }
     },
     
     assignInteract: function(script)
     {
         return function(gameState, next)
         {
-    	    gameState.runScripts[gameState.currChar] = script;
-    	    next();
+            gameState.runScripts[gameState.currChar] = script;
+            next();
         }
     },
 
@@ -435,12 +435,12 @@ var Character =
     
     interact: function(gameState, next)
     {
-    	var front = gameState.world.getCharacterInFrontOf(gameState.currChar, 1);
-    	if (gameState.runScripts[front])
-    	{
-    	    gameState.runScript(gameState.runScripts[front], gameState.currChar, front);
-    	}
-	   next();
+        var front = gameState.world.getCharacterInFrontOf(gameState.currChar, 1);
+        if (gameState.runScripts[front])
+        {
+            gameState.runScript(gameState.runScripts[front], gameState.currChar, front);
+        }
+       next();
     },
     
     customAction: function(func)
@@ -454,9 +454,9 @@ var Character =
     
     die: function(gameState, next)
     {
-    	gameState.world.removeCharacter(gameState.currChar);
-    	gameState.characters[gameState.currChar] = undefined;
-    	next();
+        gameState.world.removeCharacter(gameState.currChar);
+        gameState.characters[gameState.currChar] = undefined;
+        next();
     },
 
     getCharPos: function(receiverFunction)
@@ -490,7 +490,6 @@ var Character =
         }
     },
 
-
     carryFront: function(gameState, next)
     {
         var world = gameState.world;
@@ -517,33 +516,45 @@ var Character =
         next();
     },
 
+    pauseCharacter: function(gameState, next)
+    {
+        gameState.characters[gameState.currChar].charScriptRunning = false;
+        next();
+    },
+
+    resumeCharacter: function(gameState, next)
+    {
+        gameState.characters[gameState.currChar].charScriptRunning = true;
+        next();
+    },
+
 }
 
 var Interaction =
 {
     faceInteractor: function(gameState, next)
     {
-    	var world = gameState.world;
-    	var interactorPos = world.getCharacterPosition(gameState.currChar);
-    	var interacteePos = world.getCharacterPosition(gameState.interactee);
-    	
-    	if (interactorPos.x < interacteePos.x) {
-    	    world.rotateCharacter(gameState.interactee, 3);
-    	}
-    	
-    	if (interactorPos.x > interacteePos.x) {
-    	    world.rotateCharacter(gameState.interactee, 1);
-    	}
-    	
-    	if (interactorPos.y < interacteePos.y) {
-    	    world.rotateCharacter(gameState.interactee, 0);
-    	}
-    	
-    	if (interactorPos.y > interacteePos.y) {
-    	    world.rotateCharacter(gameState.interactee, 2);
-    	}
-    	
-    	next();
+        var world = gameState.world;
+        var interactorPos = world.getCharacterPosition(gameState.currChar);
+        var interacteePos = world.getCharacterPosition(gameState.interactee);
+        
+        if (interactorPos.x < interacteePos.x) {
+            world.rotateCharacter(gameState.interactee, Directions.Left);
+        }
+        
+        if (interactorPos.x > interacteePos.x) {
+            world.rotateCharacter(gameState.interactee, Directions.Right);
+        }
+        
+        if (interactorPos.y < interacteePos.y) {
+            world.rotateCharacter(gameState.interactee, Directions.Up);
+        }
+        
+        if (interactorPos.y > interacteePos.y) {
+            world.rotateCharacter(gameState.interactee, Directions.Down);
+        }
+        
+        next();
     },
 
     turnBackOnInteractor: function(gameState, next)
@@ -554,19 +565,19 @@ var Interaction =
         var interacteePos = world.getCharacterPosition(gameState.interactee);
         
         if (interactorPos.x < interacteePos.x) {
-            world.rotateCharacter(gameState.interactee, 1);
+            world.rotateCharacter(gameState.interactee, Directions.Right);
         }
         
         if (interactorPos.x > interacteePos.x) {
-            world.rotateCharacter(gameState.interactee, 3);
+            world.rotateCharacter(gameState.interactee, Directions.Left);
         }
         
         if (interactorPos.y < interacteePos.y) {
-            world.rotateCharacter(gameState.interactee, 2);
+            world.rotateCharacter(gameState.interactee, Directions.Down);
         }
         
         if (interactorPos.y > interacteePos.y) {
-            world.rotateCharacter(gameState.interactee, 0);
+            world.rotateCharacter(gameState.interactee, Directions.Right);
         }
         
         next();
@@ -583,8 +594,8 @@ var Interaction =
 
     pauseInteractee: function(gameState, next)
     {
-    	gameState.characters[gameState.interactee].charScriptRunning = false;
-    	next();
+        gameState.characters[gameState.interactee].charScriptRunning = false;
+        next();
     },
 
     killInteractee: function(gameState, next)
@@ -596,15 +607,15 @@ var Interaction =
     
     resumeInteractee: function(gameState, next)
     {
-    	gameState.characters[gameState.interactee].charScriptRunning = true;
-    	next();
+        gameState.characters[gameState.interactee].charScriptRunning = true;
+        next();
     },
     
     die: function(gameState, next)
     {
-    	gameState.world.removeCharacter(gameState.currChar);
-    	gameState.characters[gameState.currChar] = undefined;
-    	next();
+        gameState.world.removeCharacter(gameState.currChar);
+        gameState.characters[gameState.currChar] = undefined;
+        next();
     },
 
     addAnimationOnInteractee: function(name)
@@ -684,7 +695,7 @@ var Script =
     {
         return function(gameState, next)
         {
-            if (predicateFunction())
+            if (predicateFunction(gameState))
             {
                 gameState.goto = label;
             }
@@ -692,7 +703,7 @@ var Script =
         }
     },
 
-    run: function(times, script)
+    run: function(times, script, delay=0)
     {
         if (Array.isArray(times))
         {
@@ -726,7 +737,7 @@ var Script =
                     setTimeout(function()
                     {
                         runTheScript(checkEnd);
-                    }, 0);
+                    }, delay);
                 }
             }
 
@@ -775,7 +786,7 @@ var Script =
         {
             var theDialog = gameState.dialogs[dialogName];
             theDialog.hideHighlightBox();
-	        var prevActions = gameState.input.getActions();
+            var prevActions = gameState.input.getActions();
 
             var dialogActions =
             {
@@ -786,14 +797,14 @@ var Script =
                     next();
                 },
             }
-	    
-	        gameState.input.setActions({});
-	    
+        
+            gameState.input.setActions({});
+        
             theDialog.startWritingText(text, function()
-    	    {
-        		theDialog.showNextArrow();
-        		gameState.input.setActions(dialogActions);
-    	    });
+            {
+                theDialog.showNextArrow();
+                gameState.input.setActions(dialogActions);
+            });
         }
     },
 
@@ -905,7 +916,7 @@ var Script =
         {
             var char = gameState.world.addCharacter(charNum, x, y, shift);
             gameState.runScript(script, char);
-	        gameState.characters[char] = new GameCharacter(char);
+            gameState.characters[char] = new GameCharacter(char);
             next();
         }
     },
@@ -915,7 +926,7 @@ var Script =
         return function(gameState, next)
         {
             gameState.world.removeCharacter(charNum);
-	        gameState.characters[charNum] = undefined;
+            gameState.characters[charNum] = undefined;
             next();
         }
     },

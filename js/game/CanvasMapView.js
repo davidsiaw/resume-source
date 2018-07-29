@@ -3,6 +3,7 @@ function CanvasMapView(x,y,z,w,h,mapModel)
     var self = this;
     var tileSize = mapModel.getTileSize();
     var camera = new MapCamera();
+    var maskOpacity = 0.0;
     
     var canvas = document.createElement('canvas');
     var context = canvas.getContext("2d");
@@ -22,6 +23,7 @@ function CanvasMapView(x,y,z,w,h,mapModel)
     
     var prerenderedMap = {};
     var charSetImg = new Image();
+    var oneTileCharSetImg = new Image();
     
     this.setCamera = function(cam)
     {
@@ -47,10 +49,21 @@ function CanvasMapView(x,y,z,w,h,mapModel)
             var left = ((char.x+1/2) * tileSize - char.width/2 - (cameraPos.x) * tileSize) ;
             var top = ((char.y+1) * tileSize - char.height - (cameraPos.y) * tileSize) ;
             
-            context.drawImage(
-                charSetImg,
-                char.offsetx,char.offsety,char.width,char.height,
-                left + char.pixeloffsetx,top + char.charShift + char.pixeloffsety,char.width,char.height);
+            if (char.multitile)
+            {
+                context.drawImage(
+                    charSetImg,
+                    char.offsetx,char.offsety,char.width,char.height,
+                    left + char.pixeloffsetx,top + char.charShift + char.pixeloffsety,char.width,char.height);
+            }
+            else
+            {
+                context.drawImage(
+                    oneTileCharSetImg,
+                    char.baseoffsetx,0,char.width,char.height,
+                    left + char.pixeloffsetx,top + char.charShift + char.pixeloffsety,char.width,char.height);                
+            }
+
         }
     }
     
@@ -197,14 +210,33 @@ function CanvasMapView(x,y,z,w,h,mapModel)
             }
         }
         
+        var oldAlpha = context.globalAlpha;
+        context.globalAlpha = maskOpacity;
+        context.fillStyle = "#000";
+        context.fillRect(0, 0, w, h);
+        context.globalAlpha = oldAlpha;
+
         lastUpdateTime = new Date();
+
+
     }
     
     var loaded = false;
     
     prerenderedMap = mapModel.getPrerenderedMap();
     charSetImg = mapModel.getCharacterImage();
+    oneTileCharSetImg = mapModel.getOneTileCharacterImage();
     
+    this.setMaskOpacity = function(alpha)
+    {
+        maskOpacity = alpha;
+    }
+
+    this.getMaskOpacity = function()
+    {
+        return maskOpacity;
+    }
+
     this.getRectangle = function()
     {
         return {w:w, h:h, x:x, y:y};
@@ -227,13 +259,14 @@ function CanvasMapView(x,y,z,w,h,mapModel)
     {
         if (yes)
         {
-            canvas.style.border = "1px solid #000"
+            canvas.style.border = "3px solid #000"
         }
         else
         {
             canvas.style.border = "0px"
         }
     }
+
     
     loaded = true;
     self.update();

@@ -6,6 +6,7 @@ topnav_page "", "RESUME: David Siaw" do
 
 	make_menu(:en)
 
+	request_js "js/game/constants.js"
 	request_js "js/game/gamepad.js"
 	request_js "js/game/Update.js"
 	request_js "js/game/MapCamera.js"
@@ -21,7 +22,7 @@ topnav_page "", "RESUME: David Siaw" do
 
 	row do
 		col 12 do
-			ibox do
+			panel "David's Resume Game" do
 				div id: "game-wrapper" do
 					div id: "game"
 				end
@@ -30,6 +31,7 @@ topnav_page "", "RESUME: David Siaw" do
 	end
 
 	on_page_load <<-SCRIPT
+		console.log("%cHi. Thanks for coming to my resume site! Theres nothing much here except game debug output. Have fun playing!", "background: red; color: yellow; font-size: x-large")
 		mixpanel.track("game");
 	SCRIPT
 	

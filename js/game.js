@@ -119,7 +119,8 @@ loadImages([
 	"/images/game/transparent.png", 
 	"/images/game/backgroundpng.png", 
 	"/images/game/wings_anim.png",
-	"/images/game/explode_anim.png"
+	"/images/game/explode_anim.png",
+	"/images/game/onetilechars.png"
 	], 
 	function(loadedImages)
 	{
@@ -128,6 +129,7 @@ loadImages([
 		backgroundImg = loadedImages[2];
 		wingsAnim = loadedImages[3];
 		explodeAnim = loadedImages[4];
+		oneTileCharImg = loadedImages[5];
 		startGame();
 	});
 
@@ -135,12 +137,13 @@ loadImages([
 function startScene(parent,map,script)
 {
 	var input = new SimpleInput();
-	var world = new World(tilesetImg, charImg, backgroundImg, tileInfo, map);
+	var world = new World(tilesetImg, charImg, oneTileCharImg, backgroundImg, tileInfo, map);
 
 	world.addAnimation("wings", wingsAnim, 192, 192);
 	world.addAnimation("explode", explodeAnim, 64, 64);
 	
 	var map = new CanvasMapView(10, 10, 0, 640,480, world.getModel());
+	map.setHasBorder(true);
 
 	var dialog = new DialogView(10,10,1,640,480,"/images/game/midJQ.png");
 	var controlleft = new DialogView(10,10,1,640,480,"/images/game/midJQ.png");
@@ -181,7 +184,6 @@ function startScene(parent,map,script)
 		statusDialog.update();
 		map.update();
 
-		
 	}, 16)
 
 	gameState.dialogs["BOTTOM"] = dialog;
@@ -189,12 +191,15 @@ function startScene(parent,map,script)
 	gameState.dialogs["RIGHT"] = controlright;
 	gameState.dialogs["STATUS"] = statusDialog;
 
+	map.setMaskOpacity(1);
+
 	gameState.runScript(script);
 
 	return {
 		interval: interval,
 		gameState: gameState,
 		mapDisplay: mapDisplay,
+		map: map,
 		parent: parent
 	};
 }
@@ -220,7 +225,7 @@ function secondmap()
 
 function firstmap()
 {
-	var mapInfo = new Map(20,20);
+	var mapInfo = new Map(100,100);
 
 	var gameState;
 	
@@ -305,9 +310,20 @@ function firstmap()
 		Character.assignDirectionalControl,
 		Character.assignCollide([]),
 		Character.assignZ([
-			Character.carryFront
+			Script.gotoif("end", function(gameState)
+			{
+				var thingId = gameState.world.getCharacterInFrontOf(gameState.currChar);
+				if (thingId !== undefined)
+				{
+					var thing = gameState.world.getModel().getCharacter(thingId);
+					return !Carriables[thing.typeid];
+				}
+				return !gameState.world.isACarrier(gameState.currChar);
+			}),
+			Character.carryFront,
+			Script.label("end")
 		]),
-		//Character.assignX([Character.addAnimation("wings")]),
+		Character.assignX([Character.addAnimation("wings")]),
 		Character.assignA([Character.interact]),
 		//Character.assignS([Character.spawnCharacterAtFront(2,-16,fireballScript)])
 	];
@@ -398,7 +414,7 @@ function firstmap()
 	
 	var boxScript =
 	[
-		Character.setSlow(32),
+		Character.setSlow(64),
 		Character.assignHitBySomething(boxCollide)
 	];
 
@@ -475,27 +491,35 @@ function firstmap()
 		Character.assignInteract(davidTalk),
 	];
 
+	var opacity = 1;
+	var map;
+
 	var mainScript =
 	[
-		Script.customAction(function(theGameState) { gameState = theGameState; }),
-
-		Script.hideDialog("BOTTOM"),
 		Script.hideDialog("STATUS"),
 		Script.hideDialog("LEFT"),
 		Script.hideDialog("RIGHT"),
 
-		Script.addCharacter(5,5,5,-16,heroScript),
+		Script.speechDialog("BOTTOM", ["Please use the arrow keys to move", "and use the A key to interact with things", "the Z key picks things up"]),
+		Script.speechDialog("BOTTOM", ["What's going on...?"]),
 
-		Script.addCharacter(3,6,5,-16,girl1),
-		Script.addCharacter(7,7,5,-16,girl2),
-		Script.addCharacter(4,8,5,-16,david),
-		Script.addCharacter(1,9,5,-16,girl3),
+		Script.customAction(function(theGameState) { gameState = theGameState; }),
+
+		Script.hideDialog("BOTTOM"),
+
+
+		Script.addCharacter(Characters.Rikka,   5, 5,-16,heroScript),
+		Script.addCharacter(Characters.Dekomori,6, 5,-16,girl1),
+		Script.addCharacter(Characters.Morisama,7, 5,-16,girl2),
+		Script.addCharacter(Characters.Boy,     8, 5,-16,david),
+		Script.addCharacter(Characters.Kumin,   9, 5,-16,girl3),
+
 
 		//Script.addCharacter(1,5,5,-16,girlScript),
 		//Script.addCharacter(3,13,13,-16,boyScript),
 		//Script.addCharacter(5,1,1,-16,walkUpDown),
 		//Script.addCharacter(4,8,5,-16,[Character.walkDown]),
-		Script.addCharacter(10,10,10,0,boxScript),
+		Script.addCharacter(Characters.BlueBox, 10,10,0,boxScript),
 		//Script.addCharacter(9,11,10,0,boxScript),
 		//Script.addCharacter(9,12,10,0,boxScript),
 		//Script.addCharacter(9,13,10,0,boxScript),
@@ -508,9 +532,22 @@ function firstmap()
 		//Script.speechDialog(dialog, ["Sie sind das Essen und we sind die Jager", "", "This is the world"]),
 		//Script.speechDialog(dialog, ["She was very nervous"]),
 
+		Script.run(19,
+		[
+			Script.customAction(function()
+			{
+				opacity -= 0.05;
+				map.setMaskOpacity(opacity);
+			}),
+		], 50),
+
+		Script.customAction(function(theGameState) { map.setMaskOpacity(0); }),
+
+
 	];
 
-	startScene(document.getElementById("game"), mapInfo, mainScript);
+	var x = startScene(document.getElementById("game"), mapInfo, mainScript);
+	map = x.map;
 
 }
 
