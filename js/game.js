@@ -420,39 +420,38 @@ function firstmap()
 
 
 
-	var girl1Talk =
+	var dekomoriTalk =
 	[
 		Interaction.pauseInteractee,
 		Script.showDialog("BOTTOM"),
-		Script.speechDialog("BOTTOM", ["宇宙からの愛のエネルギーを", "胸が痛いほどに感じています"]),
-		Script.simpleSelectDialog("BOTTOM", ["Kagami", "Tsukasa", "Konata", "Miyuki", "Kusakabe", "Hiyori"], 
-			function(sel){}),
+		Script.speechDialog("BOTTOM", ["Dekomori", "I'm stuck here","I'm stuck here","I'm stuck here"]),
+		Script.speechDialog("BOTTOM", ["Dekomori", "Help me...", "Help me... ", "Please help me get out of here!"]),
 		Script.hideDialog("BOTTOM"),
 		Interaction.resumeInteractee
 	];
 	
-	var girl1 =
+	var dekomoriScript =
 	[
 		Character.faceDown,
-		Character.assignInteract(girl1Talk),
+		Character.assignInteract(dekomoriTalk),
 	];
 	
 
-	var girl2Talk =
+	var morisamaTalk =
 	[
 		Interaction.pauseInteractee,
 		Script.showDialog("BOTTOM"),
-		Script.speechDialog("BOTTOM", ["", "胸が痛いほどに感じています"]),
+		Script.speechDialog("BOTTOM", ["Shinka", "Well, looks like you broke out.", "How did you do it?"]),
 		Script.simpleSelectDialog("BOTTOM", ["Kagami", "Tsukasa", "Konata", "Miyuki", "Kusakabe", "Hiyori"], 
 			function(sel){}),
 		Script.hideDialog("BOTTOM"),
 		Interaction.resumeInteractee
 	];
 	
-	var girl2 =
+	var morisamaScript =
 	[
 		Character.faceDown,
-		Character.assignInteract(girl2Talk),
+		Character.assignInteract(morisamaTalk),
 	];
 
 
@@ -494,13 +493,81 @@ function firstmap()
 	var opacity = 1;
 	var map;
 
-	var mainScript =
-	[
+	var map_data = [
+		"###########################################################################",
+		"#                            #                                            #",
+		"#   1          ### ### ###   #                                      ###   #",
+		"#   S          # # # # # #   #                                      # #   #",
+		"#                            #                                  t         #",
+		"#                            #                                            #",
+		"#                            #                                            #",
+		"#           r                #                     p                      #",
+		"#                    b       #                                            #",
+		"#              g             #                                            #",
+		"#                            #                                            #",
+		"#                            #                                            #",
+		"########################### ##                                            #",
+		"#                                                                         #",
+		"#      2                                        o                         #",
+		"#                                                                         #",
+		"#                                                                         #",
+		"#                                                                         #",
+		"#                                                        y                #",
+		"#                                                                         #",
+		"#                                                                         #",
+		"#                                         m                               #",
+		"#                                                                         #",
+		"#                                                                         #",
+		"#                                                                         #",
+		"###########################################################################",
+	]
+
+	var map_script = [
 		Script.hideDialog("STATUS"),
 		Script.hideDialog("LEFT"),
-		Script.hideDialog("RIGHT"),
+		Script.hideDialog("RIGHT")
+	]
 
-		Script.speechDialog("BOTTOM", ["Please use the arrow keys to move", "and use the A key to interact with things", "the Z key picks things up"]),
+	for (var my = 0; my < map_data.length; my++)
+	{
+		for (var mx = 0; mx < map_data[0].length; mx++)
+		{
+			if(map_data[my][mx] === "#")
+			{
+				map_script.push(Script.addCharacter(Characters.GrayBox, mx, my, 0, []))
+			}
+
+			if(map_data[my][mx] === "S")
+			{
+				map_script.push(Script.addCharacter(Characters.Rikka, mx, my,-16, heroScript))
+			}
+
+			if(map_data[my][mx] === "r") { map_script.push(Script.addCharacter(Characters.RedBox, mx, my,0, boxScript)) }
+			if(map_data[my][mx] === "g") { map_script.push(Script.addCharacter(Characters.GreenBox, mx, my,0, boxScript)) }
+			if(map_data[my][mx] === "b") { map_script.push(Script.addCharacter(Characters.BlueBox, mx, my,0, boxScript)) }
+
+			if(map_data[my][mx] === "t") { map_script.push(Script.addCharacter(Characters.TealBox, mx, my,0, boxScript)) }
+			if(map_data[my][mx] === "p") { map_script.push(Script.addCharacter(Characters.PurpleBox, mx, my,0, boxScript)) }
+			if(map_data[my][mx] === "o") { map_script.push(Script.addCharacter(Characters.OrangeBox, mx, my,0, boxScript)) }
+			if(map_data[my][mx] === "y") { map_script.push(Script.addCharacter(Characters.YellowBox, mx, my,0, boxScript)) }
+			if(map_data[my][mx] === "m") { map_script.push(Script.addCharacter(Characters.PinkBox, mx, my,0, boxScript)) }
+
+			if(map_data[my][mx] === "1")
+			{
+				map_script.push(Script.addCharacter(Characters.Dekomori, mx, my,-16, dekomoriScript))
+			}
+
+			if(map_data[my][mx] === "2")
+			{
+				map_script.push(Script.addCharacter(Characters.Morisama, mx, my,-16, morisamaScript))
+			}
+		}		
+	}
+
+	var mainScript =
+	[
+		Script.speechDialog("BOTTOM", ["..."]),
+		Script.speechDialog("BOTTOM", ["Where am I...?"]),
 		Script.speechDialog("BOTTOM", ["What's going on...?"]),
 
 		Script.customAction(function(theGameState) { gameState = theGameState; }),
@@ -508,18 +575,17 @@ function firstmap()
 		Script.hideDialog("BOTTOM"),
 
 
-		Script.addCharacter(Characters.Rikka,   5, 5,-16,heroScript),
-		Script.addCharacter(Characters.Dekomori,6, 5,-16,girl1),
-		Script.addCharacter(Characters.Morisama,7, 5,-16,girl2),
-		Script.addCharacter(Characters.Boy,     8, 5,-16,david),
-		Script.addCharacter(Characters.Kumin,   9, 5,-16,girl3),
+		
+		//Script.addCharacter(Characters.Dekomori,6, 5,-16,girl1),
+		//Script.addCharacter(Characters.Morisama,7, 5,-16,girl2),
+		//Script.addCharacter(Characters.Boy,     8, 5,-16,david),
+		//Script.addCharacter(Characters.Kumin,   9, 5,-16,girl3),
 
 
 		//Script.addCharacter(1,5,5,-16,girlScript),
 		//Script.addCharacter(3,13,13,-16,boyScript),
 		//Script.addCharacter(5,1,1,-16,walkUpDown),
 		//Script.addCharacter(4,8,5,-16,[Character.walkDown]),
-		Script.addCharacter(Characters.BlueBox, 10,10,0,boxScript),
 		//Script.addCharacter(9,11,10,0,boxScript),
 		//Script.addCharacter(9,12,10,0,boxScript),
 		//Script.addCharacter(9,13,10,0,boxScript),
@@ -546,7 +612,7 @@ function firstmap()
 
 	];
 
-	var x = startScene(document.getElementById("game"), mapInfo, mainScript);
+	var x = startScene(document.getElementById("game"), mapInfo, map_script.concat(mainScript));
 	map = x.map;
 
 }

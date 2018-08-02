@@ -31,7 +31,15 @@ var Characters = {
 	Rikka_shoot: 6,
 	Kumin: 7,
 	BoyUniform: 8,
-	BlueBox: 10000,
+	BlueBox:   10000,
+	RedBox:    10001,
+	PurpleBox: 10002,
+	GreenBox:  10003,
+	BrownBox:  10004,
+	YellowBox: 10005,
+	PinkBox:   10006,
+	TealBox:   10007,
+	GrayBox:   10008,
 }
 
 var Carriables = {}
