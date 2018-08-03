@@ -408,7 +408,10 @@ function firstmap()
 	var boxCollide =
 	[
 		Character.turnBackOnInteractor,
-		Character.walkForward
+		Character.walkForward,
+		Script.customAction(function(theGameState) { 
+			console.log("boxDidMove", theGameState.currChar);
+		}),
 
 	];
 	

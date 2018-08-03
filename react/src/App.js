@@ -28,28 +28,45 @@ const rightItems = [
 
 const App = () => (
   <Navbar leftItems={leftItems} rightItems={rightItems}>
+    <br></br>
     <Segment>
       <Header as='h1'>David Siaw</Header>
-      <hr />
       <h3>Software Engineer</h3>
       Tokyo, Japan
       <br />
-      <Breadcrumb>
-        <Breadcrumb.Section link>devops</Breadcrumb.Section>
-        <Breadcrumb.Divider />
-        <Breadcrumb.Section link>fullstack</Breadcrumb.Section>
-        <Breadcrumb.Divider />
-        <Breadcrumb.Section active>native</Breadcrumb.Section>
-      </Breadcrumb>
     </Segment>
     <Segment>
       <Header as='h2'>Work experience</Header>
       <Grid>
         <Grid.Column computer={16} mobile={16}>
-          <TableView></TableView>
+          <TableView 
+            top_column_list={["company", "position", "start_date"]}></TableView>
         </Grid.Column>
       </Grid>
     </Segment>
+    <Segment>
+      <Header as='h2'>Personal projects</Header>
+      <Grid>
+        <Grid.Column computer={16} mobile={16}>
+          <TableView 
+            top_column_list={["name", "description", "url"]}
+            source="personal_projects.yml"
+            ></TableView>
+        </Grid.Column>
+      </Grid>
+    </Segment>
+    <Segment>
+      <Header as='h2'>Education</Header>
+      <Grid>
+        <Grid.Column computer={16} mobile={16}>
+          <TableView 
+            top_column_list={["education", "start_year"]}
+            source="education.yml"
+            ></TableView>
+        </Grid.Column>
+      </Grid>
+    </Segment>
+    <br></br>
   </Navbar>
 )
 

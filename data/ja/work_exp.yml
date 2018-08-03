@@ -6,13 +6,12 @@
   :languages:
   - C
   - C++
-  :frameworks:
-  - 
+  :frameworks: []
   :oses:
   - Windows
   - Linux
   - eCos
-  :services: 
+  :services: []
   :detail: 短いソフトウェアプロジェクトを完成するインターンシップ。携帯ラジオのソフトウェアにC++の使用の現実性の検討作業。
   :roles:
   - 複数の携帯ラジオモデルのUI抽出を作りました
