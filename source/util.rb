@@ -199,8 +199,10 @@ def make_menu(lang)
 			nav strings["#{k}"], v[:symbol], v[:path].start_with?("https") ? v[:path] : "/#{lang}#{v[:path]}"
 		end
 
-		langs.each do |lang,name|
 
+		nav "React version", :react, "/react", position: :right
+
+		langs.each do |lang,name|
 			nav name, lang_image[lang], "/#{lang}", position: :right
 		end
 

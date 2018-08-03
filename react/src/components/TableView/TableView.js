@@ -110,7 +110,10 @@ export default class TableView extends Component {
           list_outputs.push(<ul key={key+"ul"}>
             {
               h[key].map((x)=>{
-                return (<li key={x}>{x}</li>);
+                return (<li 
+                  key={x}
+                  dangerouslySetInnerHTML={{__html: x}}
+                  ></li>);
               })
             }
           </ul>)
