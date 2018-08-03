@@ -34,7 +34,7 @@ class App extends Component {
 
   componentDidMount() {
     console.log(this.context)
-    mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN);
+    mixpanel.init(process.env.MIXPANEL_TOKEN);
     mixpanel.track("react", {
       lang: "en"
     })
