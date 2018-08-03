@@ -5,6 +5,7 @@ import jsyaml from 'js-yaml'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
+import mixpanel from 'mixpanel-browser';
 
 export default class TableView extends Component {
   static propTypes = {
@@ -47,7 +48,7 @@ export default class TableView extends Component {
     })
   }
 
-  handleExpand = clickedRow => () => {
+  handleExpand = clickedRow => {
     if (this.state.expandedRow === clickedRow.h[this.props.top_column_list[0]])
     {
       this.setState({
@@ -81,7 +82,7 @@ export default class TableView extends Component {
   formatCellOutput = (data) => {
     if (data.toString().indexOf("http") === 0)
     {
-      return (<a href={data} target='_blank'>{data}</a>);
+      return (<a href={data} target='_blank' onClick={()=>this.handleLinkClick(data)}>{data}</a>);
     }
     return data;
   }
@@ -195,6 +196,15 @@ export default class TableView extends Component {
     this.load_data('data/'+this.props.language);
   }
 
+  handleTopicClick(itm, h) {
+    mixpanel.track("react_click_"+itm, {lang: "en", string: h[itm]});
+    return itm == this.props.top_column_list[0] ? this.handleExpand({h}) : ()=>{}
+  }
+
+  handleLinkClick(url) {
+    mixpanel.track("react_link_click", {lang: "en", going_to: url});
+  }
+
   render() {
     const { column, data, direction } = this.state
 
@@ -207,7 +217,9 @@ export default class TableView extends Component {
                 <Table.HeaderCell
                   key={x}
                   sorted={column === {x} ? direction : null}
-                  onClick={this.handleSort({x})}
+                  onClick={
+                    this.handleSort({x})
+                  }
                 >
                   {this.state.strings[x]}
                 </Table.HeaderCell>
@@ -233,7 +245,7 @@ export default class TableView extends Component {
                       style={{
                         cursor: (itm == this.props.top_column_list[0] ? 'pointer' : 'auto')
                       }}
-                      onClick={itm == this.props.top_column_list[0] ? this.handleExpand({h}) : ()=>{}}
+                      onClick={() => this.handleTopicClick(itm, h)}
                     >
                       {
                          (itm == this.props.top_column_list[0]) ? (

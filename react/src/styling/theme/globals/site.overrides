@@ -2,13 +2,9 @@
          Site Overrides
 *******************************/
 
-code {
-  background: #fff,
-  border: none
-}
-
 pre {
   background: #ddd;
   padding: 5px;
   border-radius: 5px;
+  border: none;
 }
